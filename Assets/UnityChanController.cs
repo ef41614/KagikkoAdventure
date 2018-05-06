@@ -10,16 +10,14 @@ public class UnityChanController : MonoBehaviour {
 	private float RunTime = 0.5f;
 
 	// あと何マス動けるか
-	private int RemainingSteps = 0;
+	public int RemainingSteps = 0;
 
-	private Vector3 Player_pos; //プレイヤーのポジション
+	private Vector3 Player_pos; 
 	private Vector3 NextPos;
 
 	public Rigidbody rb;
-	//アニメーションするためのコンポートを入れる
 	private Animator myAnimator;
-	//残り歩数を表示するテキスト
-	private GameObject stepTx;
+	private GameObject stepTx;  //残り歩数
 
 	public bool UIsRunning = false;
 	[SerializeField]
@@ -35,78 +33,66 @@ public class UnityChanController : MonoBehaviour {
 	private GameObject dirF;
 	private GameObject dirB;
 
+	private GameObject DiceB; 
+	public DiceButtonController DiceC;
+	private GameObject ArrowB;
+	public arrowButtonsController ArrowC;
+
 	//☆################☆################  Start  ################☆################☆
-	// Use this for initialization
 	void Start () {
 		Debug.Log ("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ゲームスタート■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-		int num = Random.Range (1, 13);
-		RemainingSteps = num;
+
 		Debug.Log("サイコロが止まった！ あと"+RemainingSteps+"マス動けます");
 		Debug.Log("RunTime:"+RunTime);
 
 		Player_pos = GetComponent<Transform>().position; //最初の時点でのプレイヤーのポジションを取得
 		rb = GetComponent<Rigidbody>();
-		//Animatorコンポーネント取得
 		this.myAnimator = GetComponent<Animator>();
 		this.stepTx = GameObject.Find("stepText");
 		this.myAnimator.SetBool ("isRunning", false);
+
+		DiceB = GameObject.Find ("DiceBox");
+		DiceC = DiceB.GetComponent<DiceButtonController>(); 
+		ArrowB = GameObject.Find ("ArrowsBox");
+		ArrowC = ArrowB.GetComponent<arrowButtonsController>();
 	}
 
 	//####################################  Update  ###################################
-	// Update is called once per frame
+
 	void Update () {
 
 		if (rb.IsSleeping ()) {
-			this.myAnimator.SetBool ("isRunning", false);
+			this.myAnimator.SetBool ("isRunning", false);  // 走行中OFF（＝停止状態）
 			UIsRunning = false;
 
 			if (RemainingSteps > 0) {
 				checkNextMove ();
+				ArrowC.canMove = true;
 
 				if (Input.GetKeyDown (KeyCode.UpArrow)) {
-					if (canGoF == true) {
-						Player_pos = GetComponent<Transform> ().position;
-						NextPos = Player_pos + (new Vector3 (0, 0, 3));
-						transform.DOLocalMove (NextPos, RunTime);
-						RemainingSteps = reduceSteps (RemainingSteps);
-						transform.rotation = Quaternion.AngleAxis (0, new Vector3 (0, 1, 0));
-					}
+					MoveForward ();
 				}
 
 				if (Input.GetKeyDown (KeyCode.DownArrow)) {
-					if (canGoB == true) {
-						Player_pos = GetComponent<Transform> ().position;
-						NextPos = Player_pos + (new Vector3 (0, 0, -3));
-						transform.DOLocalMove (NextPos, RunTime);
-						RemainingSteps = reduceSteps (RemainingSteps);
-						transform.rotation = Quaternion.AngleAxis (180, new Vector3 (0, 1, 0));
-					}
+					MoveBack ();
 				}
 
 				if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-					if (canGoL == true) {
-						Player_pos = GetComponent<Transform> ().position;
-						NextPos = Player_pos + (new Vector3 (-3, 0, 0));
-						transform.DOLocalMove (NextPos, RunTime);
-						RemainingSteps = reduceSteps (RemainingSteps);
-						transform.rotation = Quaternion.AngleAxis (90, new Vector3 (0, -1, 0));
-					}
+					MoveLeft ();
 				}
 
 				if (Input.GetKeyDown (KeyCode.RightArrow)) {
-					if (canGoR == true) {
-						Player_pos = GetComponent<Transform> ().position;
-						NextPos = Player_pos + (new Vector3 (3, 0, 0));
-						transform.DOLocalMove (NextPos, RunTime);
-						RemainingSteps = reduceSteps (RemainingSteps);
-						transform.rotation = Quaternion.AngleAxis (90, new Vector3 (0, 1, 0));
-					}
+					MoveRight ();
 				}
 
-				Debug.Log("あと"+RemainingSteps+"マス動けます");
+				Debug.Log ("あと" + RemainingSteps + "マス動けます");
 				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
 
+			} else if(RemainingSteps <=0){
+				DiceC.canRoll = true;
+				ArrowC.canMove = false;
 			}
+
 		} else {
 			this.myAnimator.SetBool ("isRunning", true);
 			UIsRunning = true;
@@ -152,6 +138,66 @@ public class UnityChanController : MonoBehaviour {
 		}
 	}
 
+	public void MoveForward() {
+		if (RemainingSteps > 0) {
+			if (canGoF == true) {
+				Player_pos = GetComponent<Transform> ().position;
+				NextPos = Player_pos + (new Vector3 (0, 0, 3));
+				transform.DOLocalMove (NextPos, RunTime);
+				RemainingSteps = reduceSteps (RemainingSteps);
+				transform.rotation = Quaternion.AngleAxis (0, new Vector3 (0, 1, 0));
+				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+			}
+		} else {
+			ArrowC.canMove = false;
+		}
+	}
+
+	public void MoveBack() {
+		if (RemainingSteps > 0) {
+			if (canGoB == true) {
+				Player_pos = GetComponent<Transform> ().position;
+				NextPos = Player_pos + (new Vector3 (0, 0, -3));
+				transform.DOLocalMove (NextPos, RunTime);
+				RemainingSteps = reduceSteps (RemainingSteps);
+				transform.rotation = Quaternion.AngleAxis (180, new Vector3 (0, 1, 0));
+				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+			}
+		} else {
+			ArrowC.canMove = false;
+		}
+	}
+
+	public void MoveLeft() {
+		if (RemainingSteps > 0) {
+			if (canGoL == true) {
+				Player_pos = GetComponent<Transform> ().position;
+				NextPos = Player_pos + (new Vector3 (-3, 0, 0));
+				transform.DOLocalMove (NextPos, RunTime);
+				RemainingSteps = reduceSteps (RemainingSteps);
+				transform.rotation = Quaternion.AngleAxis (90, new Vector3 (0, -1, 0));
+				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+			}
+		} else {
+			ArrowC.canMove = false;
+		}
+	}
+
+	public void MoveRight() {
+		if (RemainingSteps > 0) {
+			if (canGoR == true) {
+				Player_pos = GetComponent<Transform> ().position;
+				NextPos = Player_pos + (new Vector3 (3, 0, 0));
+				transform.DOLocalMove (NextPos, RunTime);
+				RemainingSteps = reduceSteps (RemainingSteps);
+				transform.rotation = Quaternion.AngleAxis (90, new Vector3 (0, 1, 0));
+				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+			}
+		} else {
+			ArrowC.canMove = false;
+		}
+	}
+		
 	//#################################################################################
 
 }

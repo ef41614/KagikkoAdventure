@@ -21,7 +21,7 @@ public class directionLController : MonoBehaviour {
 		// unitychanの中にあるUnityChanControllerを取得して変数に格納する
 		Uscript = unitychan.GetComponent<UnityChanController>(); 
 		//		this.dirM = GameObject.Find ("directionR");
-		this.dirM = GameObject.Find ("directionL");
+				this.dirM = GameObject.Find ("directionL");
 		//		this.dirM = GameObject.Find ("directionF");
 		//      this.dirM = GameObject.Find ("directionB");
 
