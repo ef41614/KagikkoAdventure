@@ -37,8 +37,8 @@ public class directionLController : MonoBehaviour {
 		// Unityちゃんが走っていない時（＝止まっている時）、
 		if (URun == false){ 
 			//Unityちゃんの位置に合わせてガイドマスの位置を移動
-			UniPos = unitychan.transform.position;
-			this.transform.position = new Vector3(UniPos.x, this.transform.position.y, UniPos.z);
+//			UniPos = unitychan.transform.position;
+//			this.transform.position = new Vector3(UniPos.x, this.transform.position.y, UniPos.z);
 
 			// 進路クリアならばガイドマスを表示する
 			if (canGoAhead == true) {

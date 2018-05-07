@@ -20,10 +20,10 @@ public class directionBController : MonoBehaviour {
 		this.unitychan = GameObject.Find ("unitychan");
 		// unitychanの中にあるUnityChanControllerを取得して変数に格納する
 		Uscript = unitychan.GetComponent<UnityChanController>(); 
-//		this.dirM = GameObject.Find ("directionR");
-//		this.dirM = GameObject.Find ("directionL");
-//		this.dirM = GameObject.Find ("directionF");
-		this.dirM = GameObject.Find ("directionB");
+		//		this.dirM = GameObject.Find ("directionR");
+		//		this.dirM = GameObject.Find ("directionL");
+		//		this.dirM = GameObject.Find ("directionF");
+				this.dirM = GameObject.Find ("directionB");
 
 	}
 
@@ -37,8 +37,8 @@ public class directionBController : MonoBehaviour {
 		// Unityちゃんが走っていない時（＝止まっている時）、
 		if (URun == false){ 
 			//Unityちゃんの位置に合わせてガイドマスの位置を移動
-				UniPos = unitychan.transform.position;
-				this.transform.position = new Vector3(UniPos.x, this.transform.position.y, UniPos.z);
+//			UniPos = unitychan.transform.position;
+//			this.transform.position = new Vector3(UniPos.x, this.transform.position.y, UniPos.z);
 
 			// 進路クリアならばガイドマスを表示する
 			if (canGoAhead == true) {
@@ -61,10 +61,10 @@ public class directionBController : MonoBehaviour {
 			Debug.Log ("障害物にぶつかる");
 		}
 	}
-		
+
 	void OnTriggerExit(Collider other){
-			canGoAhead = true;
-			Debug.Log ("障害物は無いよ");
+		canGoAhead = true;
+		Debug.Log ("障害物は無いよ");
 	}
 
 	//#################################################################################

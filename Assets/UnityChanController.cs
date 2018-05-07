@@ -12,8 +12,8 @@ public class UnityChanController : MonoBehaviour {
 	// あと何マス動けるか
 	public int RemainingSteps = 0;
 
-	private Vector3 Player_pos; 
-	private Vector3 NextPos;
+	public Vector3 Player_pos; 
+	public Vector3 NextPos;
 
 	public Rigidbody rb;
 	private Animator myAnimator;
