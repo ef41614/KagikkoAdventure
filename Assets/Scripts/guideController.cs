@@ -34,6 +34,11 @@ public class guideController : MonoBehaviour {
 //		this.dirF = GameObject.Find ("directionF");
 //		this.dirB = GameObject.Find ("directionB");
 
+
+//		transform.position = new Vector3 (21, 0, -18);
+//		transform.Translate(new Vector3 (3, 0, -3));
+
+
 	}
 		
 	//####################################  Update  ###################################
@@ -63,7 +68,7 @@ public class guideController : MonoBehaviour {
 		//Mathf.Ceil(value / multiple) * multiple;
 //		NGP.x = Mathf.Ceil ( ((NGP.x)/3)*3);
 		//Mathf.Round(value / multiple) * multiple; //五捨六入的
-//		NGP.x = Mathf.RoundToInt ( ((NGP.x)/3)*3);
+		NGP.x = Mathf.RoundToInt ( ((NGP.x)/3)*3);
 
 //		Debug.Log ("NGP.x 変更後 :"+NGP.x);
 		NGP.z = Mathf.RoundToInt ( ((NGP.z)/3)*3);
@@ -74,6 +79,7 @@ public class guideController : MonoBehaviour {
 
 //		NextGuidePos += (new Vector3 (0, 0, 1.5f));
 			transform.DOLocalMove (NextGuidePos, 0.2f);
+
 
 //		}
 

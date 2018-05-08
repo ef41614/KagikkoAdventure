@@ -64,7 +64,7 @@ public class UnityChanController : MonoBehaviour {
 //		Player_pos = new Vector3 (21, 0, -18);
 //		transform.Translate(new Vector3 (3, 0, -3));
 //		transform.position = Player_pos;
-//		ArrivedNextPoint = true;
+		ArrivedNextPoint = true;
 	}
 
 	//####################################  Update  ###################################
