@@ -8,6 +8,7 @@ TagManager:
   - Cola
   - obstacle
   - guideM
+  - Treasure
   layers:
   - Default
   - TransparentFX

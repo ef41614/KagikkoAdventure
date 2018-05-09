@@ -46,9 +46,6 @@ public class UnityChanController : MonoBehaviour {
 	void Start () {
 		Debug.Log ("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ゲームスタート■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 
-		Debug.Log("サイコロが止まった！ あと"+RemainingSteps+"マス動けます");
-		Debug.Log("RunTime:"+RunTime);
-
 		Player_pos = GetComponent<Transform>().position; //最初の時点でのプレイヤーのポジションを取得
 		rb = GetComponent<Rigidbody>();
 		this.myAnimator = GetComponent<Animator>();
@@ -95,9 +92,6 @@ public class UnityChanController : MonoBehaviour {
 				if (Input.GetKeyDown (KeyCode.RightArrow)) {
 					MoveRight ();
 				}
-
-//				Debug.Log ("あと" + RemainingSteps + "マス動けます");
-//★				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
 
 			} else if(RemainingSteps <=0){
 				DiceC.canRoll = true;
@@ -239,27 +233,16 @@ public class UnityChanController : MonoBehaviour {
 	public void OnTriggerEnter(Collider other){
 			if (other.gameObject.tag == "guideM"){
 			ArrivedNextPoint = true;
-				Debug.Log ("次のマスに到達したよ");
-//			transform.Translate(NextPos);
-			Vector3 NP;
-//			NP = NextPos;
-//			NP = Player_pos;
-//			NP.x = Mathf.RoundToInt ( ((NP.x)/3)*3);
-//			NP.z = Mathf.RoundToInt ( ((NP.z)/3)*3);
-//			NextPos = NP;
-//			transform.Translate(NextPos);
-			NP = GuideC.NextGuidePos;
-			Debug.Log ("次のマスの座標は"+NP);
-//			transform.Translate(NP);
+
+			Vector3 NP = GuideC.NextGuidePos;
 			transform.position = NP;
-//			transform.localPosition = NP;
+
 			}
 	}
 
 	void OnTriggerExit(Collider other){
 		if (other.gameObject.tag == "guideM") {
 			ArrivedNextPoint = false;
-			Debug.Log ("次のマスに行こう");
 			this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
 		}
 	}

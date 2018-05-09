@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KeyController : MonoBehaviour {
-
-
-	private Vector3 key_pos;
-	public int keyRnd = 1;
+public class TreasureController : MonoBehaviour {
 
 	private GameObject gameManager;
 	public GameManager GMScript;
@@ -34,8 +30,8 @@ public class KeyController : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag == "Player") {
 			//gameManager.GetComponent<GameManager> ().GetKey ();
-			GMScript.GetKey ();
-			GMScript.CreateTreasure ();
+			GMScript.GetTreasure ();
+			GMScript.CreateKey ();
 			Destroy (this.gameObject);
 		}
 	}
