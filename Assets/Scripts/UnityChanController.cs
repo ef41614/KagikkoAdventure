@@ -145,6 +145,7 @@ public class UnityChanController : MonoBehaviour {
 	}
 
 	public void MoveForward() {
+//		dirF.SetActive (false);	
 		if(ArrivedNextPoint == true){
 			UIsRunning = false;
 		if (RemainingSteps > 0) {
@@ -158,6 +159,7 @@ public class UnityChanController : MonoBehaviour {
 				RemainingSteps = reduceSteps (RemainingSteps);
 				transform.rotation = Quaternion.AngleAxis (0, new Vector3 (0, 1, 0));
 				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+					GuideC.ToUnderGround();
 			}
 		} else {
 			ArrowC.canMove = false;
@@ -166,6 +168,7 @@ public class UnityChanController : MonoBehaviour {
 	}
 
 	public void MoveBack() {
+//		dirB.SetActive (false);	
 		if(ArrivedNextPoint == true){
 			UIsRunning = false;
 		if (RemainingSteps > 0) {
@@ -179,6 +182,7 @@ public class UnityChanController : MonoBehaviour {
 				RemainingSteps = reduceSteps (RemainingSteps);
 				transform.rotation = Quaternion.AngleAxis (180, new Vector3 (0, 1, 0));
 				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+					GuideC.ToUnderGround();
 			}
 		} else {
 			ArrowC.canMove = false;
@@ -187,6 +191,7 @@ public class UnityChanController : MonoBehaviour {
 	}
 
 	public void MoveLeft() {
+//		dirL.SetActive (false);	
 		if(ArrivedNextPoint == true){
 			UIsRunning = false;
 		if (RemainingSteps > 0) {
@@ -200,6 +205,7 @@ public class UnityChanController : MonoBehaviour {
 				RemainingSteps = reduceSteps (RemainingSteps);
 				transform.rotation = Quaternion.AngleAxis (90, new Vector3 (0, -1, 0));
 				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+					GuideC.ToUnderGround();
 			}
 		} else {
 			ArrowC.canMove = false;
@@ -208,6 +214,7 @@ public class UnityChanController : MonoBehaviour {
 	}
 
 	public void MoveRight() {
+//		dirR.SetActive (false);
 		if(ArrivedNextPoint == true){
 			UIsRunning = false;
 		if (RemainingSteps > 0) {
@@ -223,6 +230,7 @@ public class UnityChanController : MonoBehaviour {
 				RemainingSteps = reduceSteps (RemainingSteps);
 				transform.rotation = Quaternion.AngleAxis (90, new Vector3 (0, 1, 0));
 				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+					GuideC.ToUnderGround();	
 			}
 		} else {
 			ArrowC.canMove = false;
