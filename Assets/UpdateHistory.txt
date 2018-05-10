@@ -43,3 +43,7 @@ KagikkoAdventureプロジェクト 9回目のコミット
 KagikkoAdventureプロジェクト 10回目のコミット
 
 オリジナルゲーム：ファイル整理。readme等、テキスト文を追加。
+---
+KagikkoAdventureプロジェクト 11回目のコミット
+
+オリジナルゲーム：Pちゃんとモンスターをインストール。移動処理の微修正。

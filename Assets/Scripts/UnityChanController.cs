@@ -106,11 +106,6 @@ public class UnityChanController : MonoBehaviour {
 
 	//####################################  other  ####################################
 
-	public int reduceSteps(int stp){
-		stp -= 1;
-		return stp;
-	}
-
 	public void checkNextMove(){
 		this.dirR = GameObject.Find ("directionR");
 		this.dirL = GameObject.Find ("directionL");
@@ -142,85 +137,50 @@ public class UnityChanController : MonoBehaviour {
 		}
 	}
 
+	public int reduceSteps(int stp){
+		stp -= 1;
+		return stp;
+	}
+
+	//------------------------------------------------
+
 	public void MoveForward() {
-		if(ArrivedNextPoint == true){
-			UIsRunning = false;
-		if (RemainingSteps > 0) {
-			if (canGoF == true) {
-				Player_pos = GetComponent<Transform> ().position;
-					FixPosition ();
-				NextPos = Player_pos + (new Vector3 (0, 0, 3));
-				transform.DOLocalMove (NextPos, RunTime);
-				RemainingSteps = reduceSteps (RemainingSteps);
-				transform.rotation = Quaternion.AngleAxis (0, new Vector3 (0, 1, 0));
-				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
-					GuideC.ToUnderGround();
-			}
-		} else {
-			ArrowC.canMove = false;
-		}
-		}
+		MoveNextPosition (0,3,0,canGoF);
 	}
 
 	public void MoveBack() {
-		if(ArrivedNextPoint == true){
-			UIsRunning = false;
-		if (RemainingSteps > 0) {
-			if (canGoB == true) {
-				Player_pos = GetComponent<Transform> ().position;
-					FixPosition ();
-				NextPos = Player_pos + (new Vector3 (0, 0, -3));
-				transform.DOLocalMove (NextPos, RunTime);
-				RemainingSteps = reduceSteps (RemainingSteps);
-				transform.rotation = Quaternion.AngleAxis (180, new Vector3 (0, 1, 0));
-				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
-					GuideC.ToUnderGround();
-			}
-		} else {
-			ArrowC.canMove = false;
-		}
-		}
+		MoveNextPosition (0,-3,180,canGoB);
 	}
 
 	public void MoveLeft() {
-		if(ArrivedNextPoint == true){
-			UIsRunning = false;
-		if (RemainingSteps > 0) {
-			if (canGoL == true) {
-				Player_pos = GetComponent<Transform> ().position;
-					FixPosition ();
-				NextPos = Player_pos + (new Vector3 (-3, 0, 0));
-				transform.DOLocalMove (NextPos, RunTime);
-				RemainingSteps = reduceSteps (RemainingSteps);
-				transform.rotation = Quaternion.AngleAxis (90, new Vector3 (0, -1, 0));
-				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
-					GuideC.ToUnderGround();
-			}
-		} else {
-			ArrowC.canMove = false;
-		}
-		}
+		MoveNextPosition (-3,0,-90,canGoL);
 	}
 
 	public void MoveRight() {
+		MoveNextPosition (3,0,90,canGoR);
+	}
+		
+	public void MoveNextPosition(int x, int z, int turn, bool canGoDir){
 		if(ArrivedNextPoint == true){
 			UIsRunning = false;
-		if (RemainingSteps > 0) {
-			if (canGoR == true) {
-				Player_pos = GetComponent<Transform> ().position;
+			if (RemainingSteps > 0) {
+				if (canGoDir == true) {
+					Player_pos = GetComponent<Transform> ().position;
 					FixPosition ();
-				NextPos = Player_pos + (new Vector3 (3, 0, 0));
-				transform.DOLocalMove (NextPos, RunTime);
-				RemainingSteps = reduceSteps (RemainingSteps);
-				transform.rotation = Quaternion.AngleAxis (90, new Vector3 (0, 1, 0));
-				this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+					NextPos = Player_pos + (new Vector3 (x, 0, z));
+					transform.DOLocalMove (NextPos, RunTime);
+					RemainingSteps = reduceSteps (RemainingSteps);
+					transform.rotation = Quaternion.AngleAxis (turn, new Vector3 (0, 1, 0));
+					this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
 					GuideC.ToUnderGround();	
+				}
+			} else {
+				ArrowC.canMove = false;
 			}
-		} else {
-			ArrowC.canMove = false;
-		}
 		}
 	}
+
+	//---------------------------------------
 
 	public void OnTriggerEnter(Collider other){
 			if (other.gameObject.tag == "guideM"){

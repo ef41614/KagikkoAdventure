@@ -19,7 +19,7 @@ public class DiceButtonController : MonoBehaviour {
 		Uscript = unitychan.GetComponent<UnityChanController>(); 
 		Debug.Log("Diceスクリプト出席確認");
 		this.stepTx = GameObject.Find("stepText");
-
+		this.DiceB = GameObject.Find ("DiceRollButton");
 	}
 
 	//####################################  Update  ###################################
