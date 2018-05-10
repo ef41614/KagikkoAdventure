@@ -58,9 +58,7 @@ public class UnityChanController : MonoBehaviour {
 		ArrowC = ArrowB.GetComponent<arrowButtonsController>();
 		GuideM = GameObject.Find ("guideMaster");
 		GuideC = GuideM.GetComponent<guideController> ();
-//		Player_pos = new Vector3 (21, 0, -18);
-//		transform.Translate(new Vector3 (3, 0, -3));
-//		transform.position = Player_pos;
+
 		ArrivedNextPoint = true;
 	}
 
@@ -69,8 +67,8 @@ public class UnityChanController : MonoBehaviour {
 	void Update () {
 
 		if(ArrivedNextPoint == true){
-//		if (rb.IsSleeping ()) {
-			this.myAnimator.SetBool ("isRunning", false);  // 走行中OFF（＝停止状態）
+			// 走行中状態がOFF（＝停止状態）の時
+			this.myAnimator.SetBool ("isRunning", false);  
 			UIsRunning = false;
 
 			if (RemainingSteps > 0) {
@@ -101,7 +99,7 @@ public class UnityChanController : MonoBehaviour {
 		} else {
 			this.myAnimator.SetBool ("isRunning", true);
 			UIsRunning = true;
-//			ArrivedNextPoint = false;
+			ArrivedNextPoint = false;
 		}
 
 	}
@@ -145,15 +143,12 @@ public class UnityChanController : MonoBehaviour {
 	}
 
 	public void MoveForward() {
-//		dirF.SetActive (false);	
 		if(ArrivedNextPoint == true){
 			UIsRunning = false;
 		if (RemainingSteps > 0) {
 			if (canGoF == true) {
 				Player_pos = GetComponent<Transform> ().position;
 					FixPosition ();
-					//Player_pos.x = Mathf.RoundToInt ( ((Player_pos.x)/3)*3); 
-					//Player_pos.z = Mathf.RoundToInt ( ((Player_pos.z)/3)*3);
 				NextPos = Player_pos + (new Vector3 (0, 0, 3));
 				transform.DOLocalMove (NextPos, RunTime);
 				RemainingSteps = reduceSteps (RemainingSteps);
@@ -164,19 +159,16 @@ public class UnityChanController : MonoBehaviour {
 		} else {
 			ArrowC.canMove = false;
 		}
-	}
+		}
 	}
 
 	public void MoveBack() {
-//		dirB.SetActive (false);	
 		if(ArrivedNextPoint == true){
 			UIsRunning = false;
 		if (RemainingSteps > 0) {
 			if (canGoB == true) {
 				Player_pos = GetComponent<Transform> ().position;
 					FixPosition ();
-//					Player_pos.x = Mathf.RoundToInt ( ((Player_pos.x)/3)*3); 
-//					Player_pos.z = Mathf.RoundToInt ( ((Player_pos.z)/3)*3);
 				NextPos = Player_pos + (new Vector3 (0, 0, -3));
 				transform.DOLocalMove (NextPos, RunTime);
 				RemainingSteps = reduceSteps (RemainingSteps);
@@ -187,19 +179,16 @@ public class UnityChanController : MonoBehaviour {
 		} else {
 			ArrowC.canMove = false;
 		}
-	}
+		}
 	}
 
 	public void MoveLeft() {
-//		dirL.SetActive (false);	
 		if(ArrivedNextPoint == true){
 			UIsRunning = false;
 		if (RemainingSteps > 0) {
 			if (canGoL == true) {
 				Player_pos = GetComponent<Transform> ().position;
 					FixPosition ();
-//					Player_pos.x = Mathf.RoundToInt ( ((Player_pos.x)/3)*3); 
-//					Player_pos.z = Mathf.RoundToInt ( ((Player_pos.z)/3)*3);
 				NextPos = Player_pos + (new Vector3 (-3, 0, 0));
 				transform.DOLocalMove (NextPos, RunTime);
 				RemainingSteps = reduceSteps (RemainingSteps);
@@ -210,21 +199,16 @@ public class UnityChanController : MonoBehaviour {
 		} else {
 			ArrowC.canMove = false;
 		}
-	}
+		}
 	}
 
 	public void MoveRight() {
-//		dirR.SetActive (false);
 		if(ArrivedNextPoint == true){
 			UIsRunning = false;
 		if (RemainingSteps > 0) {
 			if (canGoR == true) {
 				Player_pos = GetComponent<Transform> ().position;
-					//Mathf.RoundToInt ( ((NP.x)/3)*3);
 					FixPosition ();
-//					Player_pos.x = Mathf.RoundToInt ( ((Player_pos.x)/3)*3); 
-//					Player_pos.z = Mathf.RoundToInt ( ((Player_pos.z)/3)*3);
-//					NextPos = Mathf.RoundToInt (((Player_pos + (new Vector3 (3, 0, 0)))/3)*3);
 				NextPos = Player_pos + (new Vector3 (3, 0, 0));
 				transform.DOLocalMove (NextPos, RunTime);
 				RemainingSteps = reduceSteps (RemainingSteps);
@@ -235,16 +219,13 @@ public class UnityChanController : MonoBehaviour {
 		} else {
 			ArrowC.canMove = false;
 		}
-	}
+		}
 	}
 
 	public void OnTriggerEnter(Collider other){
 			if (other.gameObject.tag == "guideM"){
 			ArrivedNextPoint = true;
-
-			Vector3 NP = GuideC.NextGuidePos;
-			transform.position = NP;
-
+			transform.position = GuideC.NextGuidePos;
 			}
 	}
 

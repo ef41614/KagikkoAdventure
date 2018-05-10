@@ -5,13 +5,12 @@ using UnityEngine;
 public class arrowButtonsController : MonoBehaviour {
 	
 	private GameObject ArrowB;
-	GameObject unitychan; // Unityちゃんそのものが入る変数  
-	UnityChanController Uscript; // UnityChanControllerが入る変数
-//	public int rstp = 0;
+	GameObject unitychan; 
+	UnityChanController Uscript;
 	public bool canMove = false;
 
 	//☆################☆################  Start  ################☆################☆
-	// Use this for initialization
+
 	void Start () {
 		unitychan = GameObject.Find ("unitychan"); 
 		Uscript = unitychan.GetComponent<UnityChanController>(); 
@@ -21,10 +20,8 @@ public class arrowButtonsController : MonoBehaviour {
 	}
 
 	//####################################  Update  ###################################
-	// Update is called once per frame
-	void Update () {
 
-//		rstp = Uscript.RemainingSteps;
+	void Update () {
 
 		// 勧めるマスが0より大きい時、移動矢印ボタンを有効（再表示）にする
 		if(canMove == true){

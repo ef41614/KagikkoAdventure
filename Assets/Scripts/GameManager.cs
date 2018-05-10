@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
 	private int lastTimeNum = 0;
 
 	//☆################☆################  Start  ################☆################☆
-	// Use this for initialization
+
 	void Start () {
 		audioSource = this.gameObject.GetComponent<AudioSource> ();
 		CreateKey ();
@@ -24,9 +24,8 @@ public class GameManager : MonoBehaviour {
 
 
 	//####################################  Update  ###################################
-	// Update is called once per frame
-	void Update () {
 
+	void Update () {
 
 	}
 

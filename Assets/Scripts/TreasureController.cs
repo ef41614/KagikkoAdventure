@@ -8,7 +8,7 @@ public class TreasureController : MonoBehaviour {
 	public GameManager GMScript;
 
 	//☆################☆################  Start  ################☆################☆
-	// Use this for initialization
+
 	void Start () {
 		gameManager = GameObject.Find ("GameManager");
 		GMScript = gameManager.GetComponent<GameManager> ();
@@ -17,11 +17,9 @@ public class TreasureController : MonoBehaviour {
 
 	}
 
-
 	//####################################  Update  ###################################
-	// Update is called once per frame
-	void Update () {
 
+	void Update () {
 
 	}
 
@@ -29,12 +27,12 @@ public class TreasureController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag == "Player") {
-			//gameManager.GetComponent<GameManager> ().GetKey ();
 			GMScript.GetTreasure ();
 			GMScript.CreateKey ();
 			Destroy (this.gameObject);
 		}
 	}
+
 	//#################################################################################
 
 }

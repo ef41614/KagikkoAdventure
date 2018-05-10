@@ -5,17 +5,15 @@ using UnityEngine.UI;
 
 public class DiceButtonController : MonoBehaviour {
 
-	//サイコロボタン押下の判定
-	private bool isDiceButtonDown = false;
 	private GameObject DiceB;
 	private int DiceResult = 0;
-	GameObject unitychan; // Unityちゃんそのものが入る変数  
-	UnityChanController Uscript; // UnityChanControllerが入る変数
+	GameObject unitychan; 
+	UnityChanController Uscript; 
 	public bool canRoll = true;
 	private GameObject stepTx;  //残り歩数
 
 	//☆################☆################  Start  ################☆################☆
-	// Use this for initialization
+
 	void Start () {
 		unitychan = GameObject.Find ("unitychan"); 
 		Uscript = unitychan.GetComponent<UnityChanController>(); 
@@ -25,7 +23,7 @@ public class DiceButtonController : MonoBehaviour {
 	}
 
 	//####################################  Update  ###################################
-	// Update is called once per frame
+
 	void Update () {
 
 		//スペースが押されたらサイコロをふる
@@ -33,7 +31,7 @@ public class DiceButtonController : MonoBehaviour {
 			DiceRoll ();
 		}
 			
-		// 進めるマスが0 && サイコロふる準備ができたら、サイコロボタン有効（再表示）にする
+		// 進めるマスが0 && サイコロふる準備ができたら、サイコロボタンを有効（再表示）にする
 		if (canRoll == true) {
 			DiceB.SetActive (true);
 		} else {
@@ -55,7 +53,6 @@ public class DiceButtonController : MonoBehaviour {
 			Debug.Log("サイコロが止まった！ あと"+DiceResult+"マス動けます");
 			this.stepTx.GetComponent<Text> ().text = "あと " + Uscript.RemainingSteps + "マス";
 			canRoll = false;
-			Uscript.RemainingSteps = DiceResult;
 		} else {
 		}
 			
