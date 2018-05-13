@@ -7,21 +7,33 @@ public class guideController : MonoBehaviour {
 
 	private GameObject unitychan;
 	private UnityChanController Uscript;
+	GameObject pchan; 
+	PchanController Pscript; 
+	GameObject turnmanager;
+	TurnManager TurnMscript;
 	public Vector3 NextGuidePos;
 	[SerializeField]
 	RectTransform rectTran;
+	Vector3 NGP;
 
 	//☆################☆################  Start  ################☆################☆
 	void Start () {
 		this.unitychan = GameObject.Find ("unitychan");
 		Uscript = unitychan.GetComponent<UnityChanController>();
-
+		pchan = GameObject.Find ("pchan"); 
+		Pscript = pchan.GetComponent<PchanController>(); 
+		turnmanager = GameObject.Find ("turnmanager");
+		TurnMscript = turnmanager.GetComponent<TurnManager>(); 
 	}
 		
 	//####################################  Update  ###################################
 	void Update () {
 
-		Vector3 NGP = Uscript.NextPos;
+		if (TurnMscript.canMove1P == true) {
+			NGP = Uscript.NextPos;
+		} else if (TurnMscript.canMove2P == true) {
+			NGP = Pscript.NextPos;
+		}
 
 		NGP.x = Mathf.RoundToInt ( ((NGP.x)/3)*3);
 		NGP.z = Mathf.RoundToInt ( ((NGP.z)/3)*3);
