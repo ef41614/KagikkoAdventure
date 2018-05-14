@@ -29,17 +29,6 @@ public class guideController : MonoBehaviour {
 	//####################################  Update  ###################################
 	void Update () {
 
-		if (TurnMscript.canMove1P == true) {
-			NGP = Uscript.NextPos;
-		} else if (TurnMscript.canMove2P == true) {
-			NGP = Pscript.NextPos;
-		}
-
-		NGP.x = Mathf.RoundToInt ( ((NGP.x)/3)*3);
-		NGP.z = Mathf.RoundToInt ( ((NGP.z)/3)*3);
-
-		NextGuidePos = NGP;
-		transform.position = NextGuidePos;
 	}
 
 	//####################################  other  ####################################
@@ -47,6 +36,28 @@ public class guideController : MonoBehaviour {
 	public void ToUnderGround(){
 		Vector3 underGround = new Vector3 (this.transform.position.x, this.transform.position.y - 50, this.transform.position.y);
 		transform.DOLocalMove (underGround, 0.1f);
+	}
+
+	public void adjustNextGuidePos(){
+		Debug.Log("adjustスクリプト出席確認");
+		if (TurnMscript.canMove1P == true) {
+			NGP = Uscript.NextPos;
+		} else if (TurnMscript.canMove2P == true) {
+			NGP = Pscript.NextPos;
+		}
+		Debug.Log("NGP上:"+NGP);
+		NGP.x = Mathf.RoundToInt ( ((NGP.x)/3)*3);
+		NGP.z = Mathf.RoundToInt ( ((NGP.z)/3)*3);
+		Debug.Log("NGP下:"+NGP);
+		NextGuidePos = NGP;
+		transform.position = NGP;
+		transform.DOLocalMove (NextGuidePos, 0.1f);
+//		transform.position = NextGuidePos;
+//		transform.Translate (NextGuidePos);
+	}
+
+	public void initializePosition(){
+		
 	}
 
 	//#################################################################################

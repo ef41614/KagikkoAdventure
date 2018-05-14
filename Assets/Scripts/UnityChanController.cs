@@ -190,11 +190,13 @@ public class UnityChanController : MonoBehaviour {
 					Player_pos = GetComponent<Transform> ().position;
 					FixPosition ();
 					NextPos = Player_pos + (new Vector3 (x, 0, z));
+
 					transform.DOLocalMove (NextPos, RunTime);
-					RemainingSteps = reduceSteps (RemainingSteps);
+//					RemainingSteps = reduceSteps (RemainingSteps);
 					transform.rotation = Quaternion.AngleAxis (turn, new Vector3 (0, 1, 0));
-					this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+					this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingSteps-1) + "マス";
 					GuideC.ToUnderGround();	
+					GuideC.adjustNextGuidePos ();
 				}
 			} else {
 //★				ArrowC.canMove = false;
@@ -209,13 +211,14 @@ public class UnityChanController : MonoBehaviour {
 		if (other.gameObject.tag == "guideM"){
 			ArrivedNextPoint = true;
 			transform.position = GuideC.NextGuidePos;
+			RemainingSteps = reduceSteps (RemainingSteps);
 		}
 	}
 
 	void OnTriggerExit(Collider other){
 		if (other.gameObject.tag == "guideM") {
 			ArrivedNextPoint = false;
-			this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+			this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingSteps-1) + "マス";
 		}
 	}
 

@@ -59,11 +59,11 @@ public class DiceButtonController : MonoBehaviour {
 			DiceResult = num;
 			if(TurnMscript.canMove1P == true){
 				Uscript.RemainingSteps = DiceResult;
-				this.stepTx.GetComponent<Text> ().text = "あと " + Uscript.RemainingSteps + "マス";
+				this.stepTx.GetComponent<Text> ().text = "あと " + (Uscript.RemainingSteps-1) + "マス";
 				Uscript.UDiceTicket--;
 			}else if(TurnMscript.canMove2P == true){
 				Pscript.RemainingSteps = DiceResult;
-				this.stepTx.GetComponent<Text> ().text = "あと " + Pscript.RemainingSteps + "マス";
+				this.stepTx.GetComponent<Text> ().text = "あと " + (Pscript.RemainingSteps-1) + "マス";
 				Pscript.PDiceTicket--;
 			}
 			Debug.Log("サイコロ投げた！");
