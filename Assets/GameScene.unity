@@ -1598,6 +1598,10 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 7fa362ca54b51bd4ca158e712df525f2, type: 2}
+    - target: {fileID: 196678, guid: 1f991cdc72180a349b0c5dcfdf7a4acc, type: 2}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1f991cdc72180a349b0c5dcfdf7a4acc, type: 2}
   m_IsPrefabParent: 0
@@ -15298,7 +15302,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1259577289}
+        - m_Target: {fileID: 704749202}
           m_MethodName: MoveForward
           m_Mode: 1
           m_Arguments:
@@ -18849,6 +18853,57 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 400000, guid: eb1cfc8303f4f584c8f43c4af9226acd, type: 3}
   m_PrefabInternal: {fileID: 701356002}
+--- !u!1 &704749201
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 704749203}
+  - component: {fileID: 704749202}
+  m_Layer: 0
+  m_Name: charamovemanager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &704749202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 704749201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a8987d2f7afa240afe0bec165acdd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RemainingStepsInfo: 0
+  Player_pos: {x: 0, y: 0, z: 0}
+  NextPos: {x: 0, y: 0, z: 0}
+  rbInfo: {fileID: 0}
+  rectTran: {fileID: 0}
+  DiceC: {fileID: 0}
+  ArrowC: {fileID: 0}
+  GuideC: {fileID: 0}
+  ArrivedNextPoint: 0
+  UDiceTicket: 1
+  PDiceTicket: 1
+--- !u!4 &704749203
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 704749201}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3, y: 50.52, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &705785420
 Prefab:
   m_ObjectHideFlags: 0
@@ -22185,7 +22240,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1259577289}
+        - m_Target: {fileID: 704749202}
           m_MethodName: MoveBack
           m_Mode: 1
           m_Arguments:
@@ -48003,7 +48058,6 @@ MonoBehaviour:
   Player_pos: {x: 0, y: 0, z: 0}
   NextPos: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
-  UIsRunning: 0
   PIsRunning: 0
   rectTran: {fileID: 0}
   DiceC: {fileID: 0}
@@ -54403,7 +54457,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1259577289}
+        - m_Target: {fileID: 704749202}
           m_MethodName: MoveLeft
           m_Mode: 1
           m_Arguments:
@@ -54867,7 +54921,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1259577289}
+        - m_Target: {fileID: 704749202}
           m_MethodName: MoveRight
           m_Mode: 1
           m_Arguments:

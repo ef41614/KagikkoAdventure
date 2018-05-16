@@ -19,7 +19,6 @@ public class PchanController : MonoBehaviour {
 	private Animator myAnimator;
 	private GameObject stepTx;  //残り歩数
 
-	public bool UIsRunning = false;
 	public bool PIsRunning = false;
 	[SerializeField]
 	RectTransform rectTran;
@@ -50,7 +49,7 @@ public class PchanController : MonoBehaviour {
 
 	//☆################☆################  Start  ################☆################☆
 	void Start () {
-		Debug.Log ("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ゲームスタート■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		Debug.Log ("Pちゃんスクリプト出席確認");
 
 		Player_pos = GetComponent<Transform>().position; //最初の時点でのプレイヤーのポジションを取得
 		rb = GetComponent<Rigidbody>();
@@ -69,58 +68,45 @@ public class PchanController : MonoBehaviour {
 		TurnMscript = turnmanager.GetComponent<TurnManager>(); 
 
 		ArrivedNextPoint = true;
+		Debug.Log("開始 PDiceTicket :"+PDiceTicket);
 	}
 
 	//####################################  Update  ###################################
 
 	void Update () {
 		Debug.Log("PDiceTicket :"+PDiceTicket);
-		if(ArrivedNextPoint == true){
-			// 走行中状態がOFF（＝停止状態）の時
-			this.myAnimator.SetBool ("isRunning", false);  
-//			UIsRunning = false;
-			PIsRunning = false;
+		if (TurnMscript.canMove2P == true) {
+			if (ArrivedNextPoint == true) {
+				// 走行中状態がOFF（＝停止状態）の時
+				this.myAnimator.SetBool ("isRunning", false);  
+				PIsRunning = false;
 
-			if (RemainingSteps > 0) {
-				checkNextMove ();
-				ArrowC.canMove = true;
+				if (RemainingSteps > 0) {
+					checkNextMove ();
+					ArrowC.canMove = true;
 
-				if (Input.GetKeyDown (KeyCode.UpArrow)) {
-					MoveForward ();
-				}
-
-				if (Input.GetKeyDown (KeyCode.DownArrow)) {
-					MoveBack ();
-				}
-
-				if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-					MoveLeft ();
-				}
-
-				if (Input.GetKeyDown (KeyCode.RightArrow)) {
-					MoveRight ();
-				}
-
-			} else if(RemainingSteps <=0){
-				if (PDiceTicket <= 0) {
-					if (rb.IsSleeping ()) {
-//									PDiceTicket --;
-				DiceC.canRoll = true;
-						ArrowC.canMove = false;
-						TurnMscript.ChangePlayer ();
-						Debug.Log ("Pちゃんからターン切り替えスクリプト呼び出し");
+				} else if (RemainingSteps <= 0) {
+					if (PDiceTicket <= 0) {
+						if (rb.IsSleeping ()) {
+							DiceC.canRoll = true;
+							ArrowC.canMove = false;
+							TurnMscript.ChangePlayer ();
+							Debug.Log ("Pちゃんからターン切り替えスクリプト呼び出し");
+						}
 					}
 				}
+
+			} else {
+				this.myAnimator.SetBool ("isRunning", true);
+				PIsRunning = true;
+				ArrivedNextPoint = false;
+
 			}
-
 		} else {
-			this.myAnimator.SetBool ("isRunning", true);
-//			UIsRunning = true;
-			PIsRunning = true;
-			ArrivedNextPoint = false;
-
+			// 走行中状態がOFF（＝停止状態）の時
+			this.myAnimator.SetBool ("isRunning", false);  
+			PIsRunning = false;
 		}
-
 	}
 
 	//####################################  other  ####################################
@@ -163,57 +149,20 @@ public class PchanController : MonoBehaviour {
 
 	//------------------------------------------------
 
-	public void MoveForward() {
-		MoveNextPosition (0,3,0,canGoF);
-	}
-
-	public void MoveBack() {
-		MoveNextPosition (0,-3,180,canGoB);
-	}
-
-	public void MoveLeft() {
-		MoveNextPosition (-3,0,-90,canGoL);
-	}
-
-	public void MoveRight() {
-		MoveNextPosition (3,0,90,canGoR);
-	}
-
-	public void MoveNextPosition(int x, int z, int turn, bool canGoDir){
-		if(ArrivedNextPoint == true){
-//			UIsRunning = false;
-			PIsRunning = false;
-			if (RemainingSteps > 0) {
-				if (canGoDir == true) {
-					Player_pos = GetComponent<Transform> ().position;
-					FixPosition ();
-					NextPos = Player_pos + (new Vector3 (x, 0, z));
-					transform.DOLocalMove (NextPos, RunTime);
-					RemainingSteps = reduceSteps (RemainingSteps);
-					transform.rotation = Quaternion.AngleAxis (turn, new Vector3 (0, 1, 0));
-					this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
-					GuideC.ToUnderGround();	
-				}
-			} else {
-//				ArrowC.canMove = false;
-//				TurnMscript.ChangePlayer();
-			}
-		}
-	}
-
 	//---------------------------------------
 
 	public void OnTriggerEnter(Collider other){
 		if (other.gameObject.tag == "guideM"){
 			ArrivedNextPoint = true;
 			transform.position = GuideC.NextGuidePos;
+			RemainingSteps = reduceSteps (RemainingSteps);
 		}
 	}
 
 	void OnTriggerExit(Collider other){
 		if (other.gameObject.tag == "guideM") {
 			ArrivedNextPoint = false;
-			this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+			this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingSteps-1) + "マス";
 		}
 	}
 

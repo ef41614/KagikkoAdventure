@@ -103,7 +103,6 @@ public class UnityChanController : MonoBehaviour {
 
 				} else if (RemainingSteps <= 0) {
 					if (UDiceTicket <= 0) {
-//				UDiceTicket --;
 						if (rb.IsSleeping ()) {
 							DiceC.canRoll = true;
 							ArrowC.canMove = false;
@@ -183,24 +182,24 @@ public class UnityChanController : MonoBehaviour {
 	}
 
 	public void MoveNextPosition(int x, int z, int turn, bool canGoDir){
-		if(ArrivedNextPoint == true){
-			UIsRunning = false;
-			if (RemainingSteps > 0) {
-				if (canGoDir == true) {
-					Player_pos = GetComponent<Transform> ().position;
-					FixPosition ();
-					NextPos = Player_pos + (new Vector3 (x, 0, z));
+		if (TurnMscript.canMove1P == true) {
+			if (ArrivedNextPoint == true) {
+				UIsRunning = false;
+				if (RemainingSteps > 0) {
+					if (canGoDir == true) {
+//						Player_pos = GetComponent<Transform> ().position;
+//						FixPosition ();
+//						NextPos = Player_pos + (new Vector3 (x, 0, z));
 
-					transform.DOLocalMove (NextPos, RunTime);
-//					RemainingSteps = reduceSteps (RemainingSteps);
-					transform.rotation = Quaternion.AngleAxis (turn, new Vector3 (0, 1, 0));
-					this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingSteps-1) + "マス";
-					GuideC.ToUnderGround();	
-					GuideC.adjustNextGuidePos ();
+//						transform.DOLocalMove (NextPos, RunTime);
+//						transform.rotation = Quaternion.AngleAxis (turn, new Vector3 (0, 1, 0));
+						this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingSteps - 1) + "マス";
+//						GuideC.ToUnderGround ();	
+//						GuideC.adjustNextGuidePos ();
+					}
+				} else {
+
 				}
-			} else {
-//★				ArrowC.canMove = false;
-
 			}
 		}
 	}
