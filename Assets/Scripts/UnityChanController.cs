@@ -46,6 +46,7 @@ public class UnityChanController : MonoBehaviour {
 	TurnManager TurnMscript;
 
 	public int UDiceTicket = 1;
+	float timeleft =0;
 
 	//☆################☆################  Start  ################☆################☆
 	void Start () {
@@ -74,7 +75,15 @@ public class UnityChanController : MonoBehaviour {
 	//####################################  Update  ###################################
 
 	void Update () {
-		Debug.Log("UDiceTicket :"+UDiceTicket);
+		
+		timeleft -= Time.deltaTime;
+		if (timeleft <= 0.0) {
+			timeleft = 1.0f;
+
+			Debug.Log("UDiceTicket :"+UDiceTicket);
+		}
+
+
 		if (TurnMscript.canMove1P == true) {
 			if (ArrivedNextPoint == true) {
 				// 走行中状態がOFF（＝停止状態）の時
@@ -85,28 +94,12 @@ public class UnityChanController : MonoBehaviour {
 					checkNextMove ();
 					ArrowC.canMove = true;
 
-					if (Input.GetKeyDown (KeyCode.UpArrow)) {
-						MoveForward ();
-					}
-
-					if (Input.GetKeyDown (KeyCode.DownArrow)) {
-						MoveBack ();
-					}
-
-					if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-						MoveLeft ();
-					}
-
-					if (Input.GetKeyDown (KeyCode.RightArrow)) {
-						MoveRight ();
-					}
-
 				} else if (RemainingSteps <= 0) {
 					if (UDiceTicket <= 0) {
 						if (rb.IsSleeping ()) {
 							DiceC.canRoll = true;
 							ArrowC.canMove = false;
-							TurnMscript.ChangePlayer ();
+//							TurnMscript.ChangePlayer ();
 							Debug.Log ("Uちゃんからターン切り替えスクリプト呼び出し");
 						}
 					}
@@ -165,83 +158,50 @@ public class UnityChanController : MonoBehaviour {
 
 	//------------------------------------------------
 
-	public void MoveForward() {
-		MoveNextPosition (0,3,0,canGoF);
-	}
+	//---------------------------------------
 
-	public void MoveBack() {
-		MoveNextPosition (0,-3,180,canGoB);
-	}
-
-	public void MoveLeft() {
-		MoveNextPosition (-3,0,-90,canGoL);
-	}
-
-	public void MoveRight() {
-		MoveNextPosition (3,0,90,canGoR);
-	}
-
-	public void MoveNextPosition(int x, int z, int turn, bool canGoDir){
+	public void OnTriggerEnter(Collider other){
 		if (TurnMscript.canMove1P == true) {
-			if (ArrivedNextPoint == true) {
-				UIsRunning = false;
-				if (RemainingSteps > 0) {
-					if (canGoDir == true) {
-//						Player_pos = GetComponent<Transform> ().position;
-//						FixPosition ();
-//						NextPos = Player_pos + (new Vector3 (x, 0, z));
-
-//						transform.DOLocalMove (NextPos, RunTime);
-//						transform.rotation = Quaternion.AngleAxis (turn, new Vector3 (0, 1, 0));
-						this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingSteps - 1) + "マス";
-//						GuideC.ToUnderGround ();	
-//						GuideC.adjustNextGuidePos ();
-					}
-				} else {
-
-				}
+			if (other.gameObject.tag == "guideM"){
+				ArrivedNextPoint = true;
+				transform.position = GuideC.NextGuidePos;
+				RemainingSteps = reduceSteps (RemainingSteps);
+				Debug.Log ("UちゃんguideMに接触：ステップ＿"+RemainingSteps);
 			}
 		}
 	}
 
-	//---------------------------------------
-
-	public void OnTriggerEnter(Collider other){
-		if (other.gameObject.tag == "guideM"){
-			ArrivedNextPoint = true;
-			transform.position = GuideC.NextGuidePos;
-			RemainingSteps = reduceSteps (RemainingSteps);
-		}
-	}
-
 	void OnTriggerExit(Collider other){
-		if (other.gameObject.tag == "guideM") {
-			ArrivedNextPoint = false;
-			this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingSteps-1) + "マス";
+		if (TurnMscript.canMove1P == true) {
+			if (other.gameObject.tag == "guideM") {
+				ArrivedNextPoint = false;
+				this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingSteps - 1) + "マス";
+				Debug.Log ("UちゃんguideMから離脱_RemainingSteps");
+			}
 		}
 	}
 
-	void FixPosition(){
-		this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+//	void FixPosition(){
+//		this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
 
-		Player_pos.x = Mathf.RoundToInt ( ((Player_pos.x)/3)*3);
-		if (Player_pos.x % 3 == 2) {
-			Player_pos.x ++;
-			Debug.Log ("ｘ++修正完了");
-		} else if (Player_pos.x % 3 == 1) {
-			Player_pos.x --;
-			Debug.Log ("ｘ--修正完了");
-		}
+//		Player_pos.x = Mathf.RoundToInt ( ((Player_pos.x)/3)*3);
+//		if (Player_pos.x % 3 == 2) {
+//			Player_pos.x ++;
+//			Debug.Log ("ｘ++修正完了");
+//		} else if (Player_pos.x % 3 == 1) {
+//			Player_pos.x --;
+//			Debug.Log ("ｘ--修正完了");
+//		}
 
-		Player_pos.z = Mathf.RoundToInt ( ((Player_pos.z)/3)*3);
-		if (Player_pos.z % 3 == 2) {
-			Player_pos.z ++;
-			Debug.Log ("ｚ++修正完了");
-		} else if (Player_pos.z % 3 == 1) {
-			Player_pos.z --;
-			Debug.Log ("ｚ--修正完了");
-		}
-	}
+//		Player_pos.z = Mathf.RoundToInt ( ((Player_pos.z)/3)*3);
+//		if (Player_pos.z % 3 == 2) {
+//			Player_pos.z ++;
+//			Debug.Log ("ｚ++修正完了");
+//		} else if (Player_pos.z % 3 == 1) {
+//			Player_pos.z --;
+//			Debug.Log ("ｚ--修正完了");
+//		}
+//	}
 
 	//#################################################################################
 

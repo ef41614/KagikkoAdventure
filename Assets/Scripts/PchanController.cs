@@ -46,6 +46,7 @@ public class PchanController : MonoBehaviour {
 	TurnManager TurnMscript;
 
 	public int PDiceTicket = 1;
+	float timeleft =0;
 
 	//☆################☆################  Start  ################☆################☆
 	void Start () {
@@ -74,7 +75,12 @@ public class PchanController : MonoBehaviour {
 	//####################################  Update  ###################################
 
 	void Update () {
-		Debug.Log("PDiceTicket :"+PDiceTicket);
+		timeleft -= Time.deltaTime;
+		if (timeleft <= 0.0) {
+			timeleft = 1.0f;
+			Debug.Log("PDiceTicket :"+PDiceTicket);
+		}
+
 		if (TurnMscript.canMove2P == true) {
 			if (ArrivedNextPoint == true) {
 				// 走行中状態がOFF（＝停止状態）の時
@@ -90,7 +96,7 @@ public class PchanController : MonoBehaviour {
 						if (rb.IsSleeping ()) {
 							DiceC.canRoll = true;
 							ArrowC.canMove = false;
-							TurnMscript.ChangePlayer ();
+//							TurnMscript.ChangePlayer ();
 							Debug.Log ("Pちゃんからターン切り替えスクリプト呼び出し");
 						}
 					}
@@ -152,17 +158,23 @@ public class PchanController : MonoBehaviour {
 	//---------------------------------------
 
 	public void OnTriggerEnter(Collider other){
-		if (other.gameObject.tag == "guideM"){
-			ArrivedNextPoint = true;
-			transform.position = GuideC.NextGuidePos;
-			RemainingSteps = reduceSteps (RemainingSteps);
+		if (TurnMscript.canMove2P == true) {
+			if (other.gameObject.tag == "guideM") {
+				ArrivedNextPoint = true;
+				transform.position = GuideC.NextGuidePos;
+				RemainingSteps = reduceSteps (RemainingSteps);
+				Debug.Log ("PちゃんguideMに接触：ステップ＿" + RemainingSteps);
+			}
 		}
 	}
 
 	void OnTriggerExit(Collider other){
-		if (other.gameObject.tag == "guideM") {
-			ArrivedNextPoint = false;
-			this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingSteps-1) + "マス";
+		if (TurnMscript.canMove2P == true) {
+			if (other.gameObject.tag == "guideM") {
+				ArrivedNextPoint = false;
+				this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingSteps - 1) + "マス";
+				Debug.Log ("PちゃんguideMから離脱_RemainingSteps");
+			}
 		}
 	}
 

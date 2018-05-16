@@ -54,7 +54,7 @@ public class guideController : MonoBehaviour {
 		Debug.Log("NGP上:"+NGP);
 		NGP.x = Mathf.RoundToInt ( ((NGP.x)/3)*3);
 		NGP.z = Mathf.RoundToInt ( ((NGP.z)/3)*3);
-		Debug.Log("NGP下:"+NGP);
+//		Debug.Log("NGP下:"+NGP);
 		NextGuidePos = NGP;
 //		transform.position = NGP;
 		transform.DOLocalMove (NextGuidePos, 0.1f);

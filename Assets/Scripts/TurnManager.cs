@@ -35,17 +35,21 @@ public class TurnManager : MonoBehaviour {
 	//####################################  other  ####################################
 
 	public void ChangePlayer(){
-		Debug.Log("ターン切り替えスクリプト呼び出され");
+		Debug.Log("★ターン切り替えスクリプト呼び出され");
 		if((Uscript.RemainingSteps <=0)&&(canMove1P==true)&&(Uscript.UIsRunning==false)){
-			if ((Uscript.UDiceTicket <= 0)&&(Pscript.PDiceTicket >0)) {
+//			if ((Uscript.UDiceTicket <= 0)&&(Pscript.PDiceTicket >0)) {
 				canMove1P = false;
 				canMove2P = true;
-			}
+			Uscript.UDiceTicket = 1;
+			Pscript.PDiceTicket = 1;
+//			}
 		}else if((Pscript.RemainingSteps <=0)&&(canMove2P==true)&&(Pscript.PIsRunning==false)){
-			if ((Pscript.PDiceTicket <= 0) && (Uscript.UDiceTicket > 0)) {
+//			if ((Pscript.PDiceTicket <= 0) && (Uscript.UDiceTicket > 0)) {
 				canMove1P = true;
 				canMove2P = false;
-			}
+			Uscript.UDiceTicket = 1;
+			Pscript.PDiceTicket = 1;
+			//			}
 		}
 	}
 

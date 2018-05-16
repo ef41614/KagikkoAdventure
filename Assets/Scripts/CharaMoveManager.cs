@@ -57,6 +57,7 @@ public class CharaMoveManager : MonoBehaviour {
 	int TicketInfo = 0;
 	GameObject activeChara;
 
+
 	//☆################☆################  Start  ################☆################☆
 	void Start () {
 		Debug.Log ("CharaMoveManagerスクリプト出席確認");
@@ -88,8 +89,6 @@ public class CharaMoveManager : MonoBehaviour {
 	//####################################  Update  ###################################
 
 	void Update () {
-		Debug.Log("UDiceTicket :"+UDiceTicket);
-
 
 		if (TurnMscript.canMove1P == true) {
 			canMoveInfo = TurnMscript.canMove1P;
@@ -179,10 +178,10 @@ public class CharaMoveManager : MonoBehaviour {
 		}
 	}
 
-	public int reduceSteps(int stp){
-		stp -= 1;
-		return stp;
-	}
+//	public int reduceSteps(int stp){
+//		stp -= 1;
+//		return stp;
+//	}
 
 	//------------------------------------------------
 
@@ -229,38 +228,39 @@ public class CharaMoveManager : MonoBehaviour {
 
 	//---------------------------------------
 
-	public void OnTriggerEnter(Collider other){
-		if (other.gameObject.tag == "guideM"){
-			ArrivedNextPoint = true;
-			transform.position = GuideC.NextGuidePos;
-			RemainingStepsInfo = reduceSteps (RemainingStepsInfo);
-		}
-	}
+//	public void OnTriggerEnter(Collider other){
+//		if (other.gameObject.tag == "guideM"){
+//			ArrivedNextPoint = true;
+//			transform.position = GuideC.NextGuidePos;
+//			RemainingStepsInfo = reduceSteps (RemainingStepsInfo);
+//		}
+//	}
 
-	void OnTriggerExit(Collider other){
-		if (other.gameObject.tag == "guideM") {
-			ArrivedNextPoint = false;
-			this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingStepsInfo-1) + "マス";
-		}
-	}
+//	void OnTriggerExit(Collider other){
+//		if (other.gameObject.tag == "guideM") {
+//			ArrivedNextPoint = false;
+//			this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingStepsInfo-1) + "マス";
+//		}
+//	}
 
 	void FixPosition(){
 		this.stepTx.GetComponent<Text> ().text = "あと " + RemainingStepsInfo + "マス";
-
+		Debug.Log ("修正中");
 		Player_pos.x = Mathf.RoundToInt ( ((Player_pos.x)/3)*3);
-		if (Player_pos.x % 3 == 2) {
+		Debug.Log ("Player_pos.x % 3 は"+ Player_pos.x % 3);
+		if ((Player_pos.x % 3 == 2)||(Player_pos.x % 3 == -1)) {
 			Player_pos.x ++;
 			Debug.Log ("ｘ++修正完了");
-		} else if (Player_pos.x % 3 == 1) {
+		} else if ((Player_pos.x % 3 == 1)||(Player_pos.x % 3 == -2)) {
 			Player_pos.x --;
 			Debug.Log ("ｘ--修正完了");
 		}
 
 		Player_pos.z = Mathf.RoundToInt ( ((Player_pos.z)/3)*3);
-		if (Player_pos.z % 3 == 2) {
+			if ((Player_pos.z % 3 == 2)||(Player_pos.z % 3 == -1)) {
 			Player_pos.z ++;
 			Debug.Log ("ｚ++修正完了");
-		} else if (Player_pos.z % 3 == 1) {
+		} else if ((Player_pos.z % 3 == 1)||(Player_pos.z % 3 == -2)) {
 			Player_pos.z --;
 			Debug.Log ("ｚ--修正完了");
 		}
