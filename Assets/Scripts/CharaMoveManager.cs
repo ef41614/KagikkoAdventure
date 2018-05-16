@@ -48,6 +48,8 @@ public class CharaMoveManager : MonoBehaviour {
 	PchanController Pscript; 
 	GameObject turnmanager;
 	TurnManager TurnMscript;
+	GameObject blackpanel;
+	FadeScript FadeSC;
 
 	public int UDiceTicket = 1;
 	public int PDiceTicket = 1;
@@ -81,6 +83,8 @@ public class CharaMoveManager : MonoBehaviour {
 		Pscript = pchan.GetComponent<PchanController>(); 
 		turnmanager = GameObject.Find ("turnmanager");
 		TurnMscript = turnmanager.GetComponent<TurnManager>(); 
+		blackpanel = GameObject.Find ("blackpanel");
+		FadeSC = blackpanel.GetComponent<FadeScript> ();
 
 		ArrivedNextPoint = true;
 
@@ -112,7 +116,7 @@ public class CharaMoveManager : MonoBehaviour {
 
 
 		if (canMoveInfo == true) {
-			Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前5");
+//			Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前5");
 			if (ArrivedNextPoint == true) {
 				// 走行中状態がOFF（＝停止状態）の時
 //				this.myAnimator.SetBool ("isRunning", false);  
@@ -120,16 +124,18 @@ public class CharaMoveManager : MonoBehaviour {
 				if (RemainingStepsInfo > 0) {
 					checkNextMove ();
 					ArrowC.canMove = true;
-					Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前4");
+//					Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前4");
 				} else if (RemainingStepsInfo <= 0) {
-					Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前3");
+//					Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前3");
 					if (TicketInfo <= 0) {
-						Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前2");
+//						Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前2");
 //						if (rbInfo.IsSleeping ()) {
 							DiceC.canRoll = true;
 							ArrowC.canMove = false;
 							Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前");
-							TurnMscript.ChangePlayer ();
+//						Invoke ("TurnMscript.ChangePlayer", 1.0f);
+//					TurnMscript.ChangePlayer ();
+						StartCoroutine("WaitAndTurnChange");
 							Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し後");
 //						}
 					}
@@ -149,6 +155,16 @@ public class CharaMoveManager : MonoBehaviour {
 	}
 
 	//####################################  other  ####################################
+
+	IEnumerator WaitAndTurnChange(){
+		yield return new WaitForSeconds(0.8f);
+		FadeSC.goFadeOut = true;
+		FadeSC.goFadeIn = false;
+		yield return new WaitForSeconds(0.8f);
+		TurnMscript.ChangePlayer ();
+		FadeSC.goFadeOut = false;
+		FadeSC.goFadeIn = true;
+	}
 
 	public void checkNextMove(){
 		this.dirR = GameObject.Find ("directionR");

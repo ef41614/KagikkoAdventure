@@ -100,7 +100,7 @@ public class UnityChanController : MonoBehaviour {
 							DiceC.canRoll = true;
 							ArrowC.canMove = false;
 //							TurnMscript.ChangePlayer ();
-							Debug.Log ("Uちゃんからターン切り替えスクリプト呼び出し");
+//							Debug.Log ("Uちゃんからターン切り替えスクリプト呼び出し");
 						}
 					}
 				}

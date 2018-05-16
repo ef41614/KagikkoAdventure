@@ -97,7 +97,7 @@ public class PchanController : MonoBehaviour {
 							DiceC.canRoll = true;
 							ArrowC.canMove = false;
 //							TurnMscript.ChangePlayer ();
-							Debug.Log ("Pちゃんからターン切り替えスクリプト呼び出し");
+//							Debug.Log ("Pちゃんからターン切り替えスクリプト呼び出し");
 						}
 					}
 				}
@@ -178,27 +178,27 @@ public class PchanController : MonoBehaviour {
 		}
 	}
 
-	void FixPosition(){
-		this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+//	void FixPosition(){
+//		this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
 
-		Player_pos.x = Mathf.RoundToInt ( ((Player_pos.x)/3)*3);
-		if (Player_pos.x % 3 == 2) {
-			Player_pos.x ++;
-			Debug.Log ("ｘ++修正完了");
-		} else if (Player_pos.x % 3 == 1) {
-			Player_pos.x --;
-			Debug.Log ("ｘ--修正完了");
-		}
+//		Player_pos.x = Mathf.RoundToInt ( ((Player_pos.x)/3)*3);
+//		if (Player_pos.x % 3 == 2) {
+//			Player_pos.x ++;
+//			Debug.Log ("ｘ++修正完了");
+//		} else if (Player_pos.x % 3 == 1) {
+//			Player_pos.x --;
+//			Debug.Log ("ｘ--修正完了");
+//		}
 
-		Player_pos.z = Mathf.RoundToInt ( ((Player_pos.z)/3)*3);
-		if (Player_pos.z % 3 == 2) {
-			Player_pos.z ++;
-			Debug.Log ("ｚ++修正完了");
-		} else if (Player_pos.z % 3 == 1) {
-			Player_pos.z --;
-			Debug.Log ("ｚ--修正完了");
-		}
-	}
+//		Player_pos.z = Mathf.RoundToInt ( ((Player_pos.z)/3)*3);
+//		if (Player_pos.z % 3 == 2) {
+//			Player_pos.z ++;
+//			Debug.Log ("ｚ++修正完了");
+//		} else if (Player_pos.z % 3 == 1) {
+//			Player_pos.z --;
+//			Debug.Log ("ｚ--修正完了");
+//		}
+//	}
 
 	//#################################################################################
 
