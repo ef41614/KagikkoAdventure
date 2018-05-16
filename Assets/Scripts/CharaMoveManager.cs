@@ -112,7 +112,7 @@ public class CharaMoveManager : MonoBehaviour {
 
 
 		if (canMoveInfo == true) {
-			
+			Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前5");
 			if (ArrivedNextPoint == true) {
 				// 走行中状態がOFF（＝停止状態）の時
 //				this.myAnimator.SetBool ("isRunning", false);  
@@ -120,15 +120,18 @@ public class CharaMoveManager : MonoBehaviour {
 				if (RemainingStepsInfo > 0) {
 					checkNextMove ();
 					ArrowC.canMove = true;
-
+					Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前4");
 				} else if (RemainingStepsInfo <= 0) {
+					Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前3");
 					if (TicketInfo <= 0) {
-						if (rbInfo.IsSleeping ()) {
+						Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前2");
+//						if (rbInfo.IsSleeping ()) {
 							DiceC.canRoll = true;
 							ArrowC.canMove = false;
+							Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前");
 							TurnMscript.ChangePlayer ();
-							Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し");
-						}
+							Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し後");
+//						}
 					}
 				}
 
@@ -208,9 +211,9 @@ public class CharaMoveManager : MonoBehaviour {
 				if (RemainingStepsInfo > 0) {
 					if (canGoDir == true) {
 //						Player_pos = GetComponent<Transform> ().position;
-						Debug.Log("Player_pos 修正前:"+Player_pos);
+//						Debug.Log("Player_pos 修正前:"+Player_pos);
 						FixPosition ();
-						Debug.Log("Player_pos 修正後:"+Player_pos);
+//						Debug.Log("Player_pos 修正後:"+Player_pos);
 						NextPos = Player_pos + (new Vector3 (x, 0, z));
 
 						activeChara.transform.DOLocalMove (NextPos, RunTime);
