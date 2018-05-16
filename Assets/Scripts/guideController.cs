@@ -63,7 +63,25 @@ public class guideController : MonoBehaviour {
 	}
 
 	public void initializePosition(){
-		
+		Vector3 CharaPos;
+		if (TurnMscript.canMove1P == true) {
+			unitychan = GameObject.Find ("unitychan");
+			Uscript = unitychan.GetComponent<UnityChanController>();
+			CharaPos = Uscript.Player_pos;
+			Debug.Log("Uscript.Player_pos :"+Uscript.Player_pos);
+//			CharaPos = GameObject.Find ("unitychan").transform;
+//			CharaPos = unitychan.GetComponent<Transform>();
+//			CharaPos = new Vector3 (GameObject.Find ("unitychan").transform);
+//			CharaPos = new Vector3( unitychan.GetComponent<Transform>());
+			transform.DOLocalMove (CharaPos, 0.1f);
+		}
+		if (TurnMscript.canMove2P == true) {
+			pchan = GameObject.Find ("pchan"); 
+			Pscript = pchan.GetComponent<PchanController>(); 
+			CharaPos = Pscript.Player_pos;
+//			CharaPos = new Vector3( GameObject.Find ("pchan").transform);
+			transform.DOLocalMove (CharaPos, 0.1f);
+		}
 	}
 
 	//#################################################################################

@@ -161,7 +161,7 @@ public class PchanController : MonoBehaviour {
 		if (TurnMscript.canMove2P == true) {
 			if (other.gameObject.tag == "guideM") {
 				ArrivedNextPoint = true;
-				transform.position = GuideC.NextGuidePos;
+//★★				transform.position = GuideC.NextGuidePos;
 				RemainingSteps = reduceSteps (RemainingSteps);
 				Debug.Log ("PちゃんguideMに接触：ステップ＿" + RemainingSteps);
 			}

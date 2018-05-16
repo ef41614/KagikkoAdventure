@@ -102,6 +102,8 @@ public class CharaMoveManager : MonoBehaviour {
 			RemainingStepsInfo = Uscript.RemainingSteps;
 			Player_pos = unitychan.GetComponent<Transform>().position; 
 			activeChara = unitychan;
+			Uscript.Player_pos = Player_pos;
+//			Uscript.NextPos = NextPos;
 		}
 
 		if (TurnMscript.canMove2P == true) {
@@ -112,6 +114,8 @@ public class CharaMoveManager : MonoBehaviour {
 			RemainingStepsInfo = Pscript.RemainingSteps;
 			Player_pos = pchan.GetComponent<Transform>().position; 
 			activeChara = pchan;
+			Pscript.Player_pos = Player_pos;
+//			Pscript.NextPos = NextPos;
 		}
 
 
@@ -160,8 +164,11 @@ public class CharaMoveManager : MonoBehaviour {
 		yield return new WaitForSeconds(0.8f);
 		FadeSC.goFadeOut = true;
 		FadeSC.goFadeIn = false;
+//		GuideC.initializePosition ();
 		yield return new WaitForSeconds(0.8f);
+//		GuideC.initializePosition ();
 		TurnMscript.ChangePlayer ();
+//		GuideC.initializePosition ();
 		FadeSC.goFadeOut = false;
 		FadeSC.goFadeIn = true;
 	}

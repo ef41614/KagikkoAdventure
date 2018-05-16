@@ -81,6 +81,7 @@ public class UnityChanController : MonoBehaviour {
 			timeleft = 1.0f;
 
 			Debug.Log("UDiceTicket :"+UDiceTicket);
+			Debug.Log("Player_pos :"+Player_pos);
 		}
 
 
@@ -164,7 +165,7 @@ public class UnityChanController : MonoBehaviour {
 		if (TurnMscript.canMove1P == true) {
 			if (other.gameObject.tag == "guideM"){
 				ArrivedNextPoint = true;
-				transform.position = GuideC.NextGuidePos;
+//★★				transform.position = GuideC.NextGuidePos;
 				RemainingSteps = reduceSteps (RemainingSteps);
 				Debug.Log ("UちゃんguideMに接触：ステップ＿"+RemainingSteps);
 			}

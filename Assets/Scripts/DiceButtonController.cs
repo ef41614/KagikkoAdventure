@@ -15,6 +15,8 @@ public class DiceButtonController : MonoBehaviour {
 	TurnManager TurnMscript;
 	GameObject pchan; 
 	PchanController Pscript; 
+	GameObject GuideM;
+	guideController GuideC;
 
 
 	//☆################☆################  Start  ################☆################☆
@@ -29,6 +31,8 @@ public class DiceButtonController : MonoBehaviour {
 		Debug.Log("Diceスクリプト出席確認");
 		this.stepTx = GameObject.Find("stepText");
 		this.DiceB = GameObject.Find ("DiceRollButton");
+		GuideM = GameObject.Find ("guideMaster");
+		GuideC = GuideM.GetComponent<guideController> ();
 	}
 
 	//####################################  Update  ###################################
@@ -51,11 +55,17 @@ public class DiceButtonController : MonoBehaviour {
 
 	//####################################  other  ####################################
 
+	//サイコロボタンが非アクティブになった時に実行
+//	void OnDisable(){
+//		Debug.Log("★Diceスクリプト_非アクティブになった時の処理_出席確認");
+//		GuideC.initializePosition ();
+//	}
+
 	//サイコロをふる処理
 	public void DiceRoll() {
 		this.DiceB = GameObject.Find ("DiceRollButton");
 		if (DiceB != null) {
-			int num = Random.Range (1, 6);
+			int num = Random.Range (2, 7);
 			DiceResult = num;
 			if(TurnMscript.canMove1P == true){
 				Uscript.RemainingSteps = DiceResult;
@@ -68,6 +78,9 @@ public class DiceButtonController : MonoBehaviour {
 			}
 			Debug.Log("サイコロ投げた！");
 			Debug.Log("サイコロが止まった！ あと"+DiceResult+"マス動けます");
+
+			GuideC.ToUnderGround ();	
+			GuideC.initializePosition ();
 
 			canRoll = false;
 		} else {
