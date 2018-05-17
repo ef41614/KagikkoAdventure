@@ -10,6 +10,8 @@ public class TurnManager : MonoBehaviour {
 	PchanController Pscript; 
 	private GameObject DiceB; 
 	public DiceButtonController DiceC;
+	GameObject imageManager;
+	ImageManager ImageMscript;
 
 	public bool canMove1P = true; 
 	public bool canMove2P = false; 
@@ -24,6 +26,8 @@ public class TurnManager : MonoBehaviour {
 		Pscript = pchan.GetComponent<PchanController>(); 
 		DiceB = GameObject.Find ("DiceBox");
 		DiceC = DiceB.GetComponent<DiceButtonController>(); 
+		imageManager = GameObject.Find ("imageManager");
+		ImageMscript = imageManager.GetComponent<ImageManager> ();
 	}
 
 	//####################################  Update  ###################################
@@ -42,6 +46,7 @@ public class TurnManager : MonoBehaviour {
 				canMove2P = true;
 			Uscript.UDiceTicket = 1;
 			Pscript.PDiceTicket = 1;
+				ImageMscript.ChangeFaceImage ();
 			}
 		}else if((Pscript.RemainingSteps <=0)&&(canMove2P==true)&&(Pscript.PIsRunning==false)){
 			if ((Pscript.PDiceTicket <= 0) && (Uscript.UDiceTicket > 0)) {
@@ -49,6 +54,7 @@ public class TurnManager : MonoBehaviour {
 				canMove2P = false;
 			Uscript.UDiceTicket = 1;
 			Pscript.PDiceTicket = 1;
+				ImageMscript.ChangeFaceImage ();
 			}
 		}
 	}

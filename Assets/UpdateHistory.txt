@@ -79,3 +79,7 @@ KagikkoAdventureプロジェクト 20回目のコミット
 KagikkoAdventureプロジェクト 21回目のコミット
 
 オリジナルゲーム：キャラFaceアイコンを左下に表示。まだ1Pのみ。
+---
+KagikkoAdventureプロジェクト 22回目のコミット
+
+オリジナルゲーム：キャラFaceアイコン導入。1P＆2P切り替えOK。

@@ -36,7 +36,6 @@ public class directionBController : MonoBehaviour {
 		bool URun = Uscript.UIsRunning; 
 		bool PRun = Pscript.PIsRunning;
 
-		if (TurnMscript.canMove1P == true) {
 			// Unityちゃんが走っていない時（＝止まっている時）、
 			if (URun == false) { 
 				// 進路クリアならばガイドマスを表示する
@@ -48,9 +47,8 @@ public class directionBController : MonoBehaviour {
 			} else if (URun == true) {
 				dirM.SetActive (false);	
 			}
-		}
+			
 
-		if (TurnMscript.canMove2P == true) {
 			// Pちゃんが走っていない時（＝止まっている時）、
 			if (PRun == false) { 
 				// 進路クリアならばガイドマスを表示する
@@ -62,7 +60,7 @@ public class directionBController : MonoBehaviour {
 			} else if (PRun == true) {
 				dirM.SetActive (false);	
 			}
-		}
+
 
 	}
 

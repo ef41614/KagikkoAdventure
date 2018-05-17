@@ -57,7 +57,7 @@ public class guideController : MonoBehaviour {
 //		Debug.Log("NGP下:"+NGP);
 		NextGuidePos = NGP;
 //		transform.position = NGP;
-		transform.DOLocalMove (NextGuidePos, 0.1f);
+		transform.DOLocalMove (NextGuidePos, 0.2f);
 //		transform.position = NextGuidePos;
 //		transform.Translate (NextGuidePos);
 	}

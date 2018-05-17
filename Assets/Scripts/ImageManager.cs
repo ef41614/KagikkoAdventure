@@ -5,18 +5,22 @@ using UnityEngine.UI;
 
 public class ImageManager : MonoBehaviour {
 
-	public Sprite 画像1;
-	public Sprite 画像2;
+	public Sprite uchan50;
+	public Sprite pchan50;
 
 	private GameObject obj;
-	private Image image;
+	private Image FaceImage;
+	GameObject turnmanager;
+	TurnManager TurnMscript;
 
 	//☆################☆################  Start  ################☆################☆
 
 	void Start () {
-		obj = GameObject.Find("image(imageオブジェクトの名前)").gameObject as GameObject;
-		image = obj.GetComponent<Image> ();
+		obj = GameObject.Find("charaFace").gameObject as GameObject;
+		FaceImage = obj.GetComponent<Image> ();
 
+		turnmanager = GameObject.Find ("turnmanager");
+		TurnMscript = turnmanager.GetComponent<TurnManager>(); 
 	}
 
 
@@ -29,8 +33,15 @@ public class ImageManager : MonoBehaviour {
 
 	//####################################  other  ####################################
 
-	public void 画像変更(){
-		image.sprite = 画像2;
+	public void ChangeFaceImage(){
+
+		if (TurnMscript.canMove2P == true) {
+			FaceImage.sprite = pchan50;
+		}
+
+		if (TurnMscript.canMove1P == true) {
+			FaceImage.sprite = uchan50;
+		}
 	}
 
 	//#################################################################################
