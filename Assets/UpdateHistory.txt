@@ -75,3 +75,7 @@ KagikkoAdventureプロジェクト 17回目のコミット
 KagikkoAdventureプロジェクト 20回目のコミット
 
 オリジナルゲーム：1P,2Pターン切り替え導入終了。ガイドマスの遷移もOK。
+---
+KagikkoAdventureプロジェクト 21回目のコミット
+
+オリジナルゲーム：キャラFaceアイコンを左下に表示。まだ1Pのみ。
