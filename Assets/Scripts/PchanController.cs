@@ -4,52 +4,43 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+[RequireComponent(typeof(CharacterController), typeof(Collider))]
 public class PchanController : MonoBehaviour {
 
-	// 任意の移動スピード用変数
-	private float RunTime = 0.7f;
+	CharacterController m_charCtrl;
 
 	// あと何マス動けるか
 	public int RemainingSteps = 0;
 
 	public Vector3 Player_pos; 
-	public Vector3 NextPos;
 
 	public Rigidbody rb;
-	private Animator myAnimator;
+	public Animator myAnimator;
 	private GameObject stepTx;  //残り歩数
 
 	public bool PIsRunning = false;
 	[SerializeField]
 	RectTransform rectTran;
 
-	private bool canGoR = true;
-	private bool canGoL = true;
-	private bool canGoF = true;
-	private bool canGoB = true;
-
-	private GameObject dirR;
-	private GameObject dirL;
-	private GameObject dirF;
-	private GameObject dirB;
-
 	private GameObject DiceB; 
 	public DiceButtonController DiceC;
 	private GameObject ArrowB;
 	public arrowButtonsController ArrowC;
-	private GameObject GuideM;
-	public guideController GuideC;
 
 	public bool ArrivedNextPoint = false;
 
 	GameObject turnmanager;
 	TurnManager TurnMscript;
+	GameObject charamovemanager;
+	CharaMoveManager CharaMoveMscript;
 
 	public int PDiceTicket = 1;
 	float timeleft =0;
 
 	//☆################☆################  Start  ################☆################☆
 	void Start () {
+		m_charCtrl = GetComponent<CharacterController>();
+
 		Debug.Log ("Pちゃんスクリプト出席確認");
 
 		Player_pos = GetComponent<Transform>().position; //最初の時点でのプレイヤーのポジションを取得
@@ -62,11 +53,11 @@ public class PchanController : MonoBehaviour {
 		DiceC = DiceB.GetComponent<DiceButtonController>(); 
 		ArrowB = GameObject.Find ("ArrowsBox");
 		ArrowC = ArrowB.GetComponent<arrowButtonsController>();
-		GuideM = GameObject.Find ("guideMaster");
-		GuideC = GuideM.GetComponent<guideController> ();
 
 		turnmanager = GameObject.Find ("turnmanager");
 		TurnMscript = turnmanager.GetComponent<TurnManager>(); 
+		charamovemanager = GameObject.Find ("charamovemanager");
+		CharaMoveMscript = charamovemanager.GetComponent<CharaMoveManager> ();
 
 		ArrivedNextPoint = true;
 		Debug.Log("開始 PDiceTicket :"+PDiceTicket);
@@ -88,7 +79,7 @@ public class PchanController : MonoBehaviour {
 				PIsRunning = false;
 
 				if (RemainingSteps > 0) {
-					checkNextMove ();
+					CharaMoveMscript.checkNextMove ();
 					ArrowC.canMove = true;
 
 				} else if (RemainingSteps <= 0) {
@@ -96,8 +87,6 @@ public class PchanController : MonoBehaviour {
 						if (rb.IsSleeping ()) {
 							DiceC.canRoll = true;
 							ArrowC.canMove = false;
-//							TurnMscript.ChangePlayer ();
-//							Debug.Log ("Pちゃんからターン切り替えスクリプト呼び出し");
 						}
 					}
 				}
@@ -117,51 +106,15 @@ public class PchanController : MonoBehaviour {
 
 	//####################################  other  ####################################
 
-	public void checkNextMove(){
-		this.dirR = GameObject.Find ("directionR");
-		this.dirL = GameObject.Find ("directionL");
-		this.dirF = GameObject.Find ("directionF");
-		this.dirB = GameObject.Find ("directionB");
-
-		if (dirR != null) {
-			canGoR = true;
-		} else {
-			canGoR = false;
-		}
-
-		if (dirL != null) {
-			canGoL = true;
-		} else {
-			canGoL = false;
-		}
-
-		if (dirF != null) {
-			canGoF = true;
-		} else {
-			canGoF = false;
-		}
-
-		if (dirB != null) {
-			canGoB = true;
-		} else {
-			canGoB = false;
-		}
-	}
-
 	public int reduceSteps(int stp){
 		stp -= 1;
 		return stp;
 	}
 
-	//------------------------------------------------
-
-	//---------------------------------------
-
 	public void OnTriggerEnter(Collider other){
 		if (TurnMscript.canMove2P == true) {
 			if (other.gameObject.tag == "guideM") {
 				ArrivedNextPoint = true;
-//★★				transform.position = GuideC.NextGuidePos;
 				RemainingSteps = reduceSteps (RemainingSteps);
 				Debug.Log ("PちゃんguideMに接触：ステップ＿" + RemainingSteps);
 			}
@@ -178,27 +131,40 @@ public class PchanController : MonoBehaviour {
 		}
 	}
 
-//	void FixPosition(){
-//		this.stepTx.GetComponent<Text> ().text = "あと " + RemainingSteps + "マス";
+	public void OnCollisionEnter(Collision other){
+		if (TurnMscript.canMove2P == true) {
+			if (other.gameObject.tag == "Player") {
+				UnityChanController uc = other.gameObject.GetComponent<UnityChanController> ();
+				PchanController pc = other.gameObject.GetComponent<PchanController> ();
+				if (uc) {
+					uc.Move (transform.forward, Random.Range (1, 4) * 3.0f);
+					Debug.Log("Pちゃんの体当たりだ！");
+				}
+//				if (bc) {
+//					bc.Move (transform.forward, Random.Range (1, 4) * 3.0f);
+//				}
+			}
+		}
+	}
 
-//		Player_pos.x = Mathf.RoundToInt ( ((Player_pos.x)/3)*3);
-//		if (Player_pos.x % 3 == 2) {
-//			Player_pos.x ++;
-//			Debug.Log ("ｘ++修正完了");
-//		} else if (Player_pos.x % 3 == 1) {
-//			Player_pos.x --;
-//			Debug.Log ("ｘ--修正完了");
-//		}
 
-//		Player_pos.z = Mathf.RoundToInt ( ((Player_pos.z)/3)*3);
-//		if (Player_pos.z % 3 == 2) {
-//			Player_pos.z ++;
-//			Debug.Log ("ｚ++修正完了");
-//		} else if (Player_pos.z % 3 == 1) {
-//			Player_pos.z --;
-//			Debug.Log ("ｚ--修正完了");
-//		}
-//	}
+	// ------------ 衝突時の処理--------------------------
+	private void OnControllerColliderHit(ControllerColliderHit hit){
+		BallController bc = hit.gameObject.GetComponent<BallController> ();
+		UnityChanController uc = hit.gameObject.GetComponent<UnityChanController> ();
+		if (uc) {
+			uc.Move (transform.forward, Random.Range (1, 4) * 3.0f);
+		}
+		if (bc) {
+			bc.Move (transform.forward, Random.Range (1, 4) * 3.0f);
+		}
+	}
+
+	public void Move(Vector3 direction, float distance){
+		Vector3 moveVector = direction.normalized * distance;
+		transform.DOMove(transform.position + moveVector, 0.5f);
+	}
+	//---------------------------------------------------
 
 	//#################################################################################
 

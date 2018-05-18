@@ -16,7 +16,7 @@ public class CharaMoveManager : MonoBehaviour {
 	public Vector3 NextPos;
 
 	public Rigidbody rbInfo;
-//	private Animator myAnimator;
+	public Animator myAnimator;
 	private GameObject stepTx;  //残り歩数
 
 //	public bool UIsRunning = false;
@@ -58,6 +58,7 @@ public class CharaMoveManager : MonoBehaviour {
 	bool RunningInfo;
 	int TicketInfo = 0;
 	GameObject activeChara;
+	GameObject activeCharaScript;
 
 
 	//☆################☆################  Start  ################☆################☆
@@ -66,7 +67,7 @@ public class CharaMoveManager : MonoBehaviour {
 
 		Player_pos = GetComponent<Transform>().position; //最初の時点でのプレイヤーのポジションを取得
 		rbInfo = GetComponent<Rigidbody>();
-//		this.myAnimator = GetComponent<Animator>();
+		myAnimator = GetComponent<Animator>();
 		this.stepTx = GameObject.Find("stepText");
 //		this.myAnimator.SetBool ("isRunning", false);
 
@@ -103,6 +104,9 @@ public class CharaMoveManager : MonoBehaviour {
 			Player_pos = unitychan.GetComponent<Transform>().position; 
 			activeChara = unitychan;
 			Uscript.Player_pos = Player_pos;
+			myAnimator = unitychan.GetComponent<Animator> ();
+			rbInfo = Uscript.rb;
+//			activeCharaScript = Uscript;
 //			Uscript.NextPos = NextPos;
 		}
 
@@ -115,6 +119,9 @@ public class CharaMoveManager : MonoBehaviour {
 			Player_pos = pchan.GetComponent<Transform>().position; 
 			activeChara = pchan;
 			Pscript.Player_pos = Player_pos;
+			myAnimator = Pscript.GetComponent<Animator> ();
+			rbInfo = Pscript.rb;
+//			activeCharaScript = Pscript;
 //			Pscript.NextPos = NextPos;
 		}
 
@@ -136,7 +143,7 @@ public class CharaMoveManager : MonoBehaviour {
 //						if (rbInfo.IsSleeping ()) {
 							DiceC.canRoll = true;
 							ArrowC.canMove = false;
-							Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前");
+//							Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前");
 //						Invoke ("TurnMscript.ChangePlayer", 1.0f);
 //					TurnMscript.ChangePlayer ();
 						StartCoroutine("WaitAndTurnChange");
@@ -254,20 +261,6 @@ public class CharaMoveManager : MonoBehaviour {
 
 	//---------------------------------------
 
-//	public void OnTriggerEnter(Collider other){
-//		if (other.gameObject.tag == "guideM"){
-//			ArrivedNextPoint = true;
-//			transform.position = GuideC.NextGuidePos;
-//			RemainingStepsInfo = reduceSteps (RemainingStepsInfo);
-//		}
-//	}
-
-//	void OnTriggerExit(Collider other){
-//		if (other.gameObject.tag == "guideM") {
-//			ArrivedNextPoint = false;
-//			this.stepTx.GetComponent<Text> ().text = "あと " + (RemainingStepsInfo-1) + "マス";
-//		}
-//	}
 
 	void FixPosition(){
 		this.stepTx.GetComponent<Text> ().text = "あと " + RemainingStepsInfo + "マス";
@@ -291,6 +284,46 @@ public class CharaMoveManager : MonoBehaviour {
 			Debug.Log ("ｚ--修正完了");
 		}
 	}
+
+	//------- 旧  Uちゃん Update () ----------------
+	/**
+	public void charaUpdate(){
+			if(canMoveInfo ==true){
+			if (ArrivedNextPoint == true) {
+				// 走行中状態がOFF（＝停止状態）の時
+				myAnimator.SetBool ("isRunning", false);  
+				activeCharaScript.myAnimator.SetBool ("isRunning", false);  
+
+				RunningInfo = false;
+
+				if (RemainingStepsInfo > 0) {
+					checkNextMove ();
+					ArrowC.canMove = true;
+
+				} else if (RemainingStepsInfo <= 0) {
+					if (PDiceTicket <= 0) {
+						if (rbInfo.IsSleeping ()) {
+							DiceC.canRoll = true;
+							ArrowC.canMove = false;
+						}
+					}
+				}
+
+			} else {
+				myAnimator.SetBool ("isRunning", true);
+				RunningInfo = true;
+				ArrivedNextPoint = false;
+
+			}
+		}
+		else {
+			// 走行中状態がOFF（＝停止状態）の時
+			myAnimator.SetBool ("isRunning", false);  
+			RunningInfo = false;
+		}
+	}
+	**/
+	//----------------------------------------------
 
 	//#################################################################################
 

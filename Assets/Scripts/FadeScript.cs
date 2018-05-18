@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class FadeScript : MonoBehaviour {
 
-	float alfa;
+	public float alfa;
 	float speed = 0.05f;
 	float red, green, blue;
 	public bool goFadeIn = false;

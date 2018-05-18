@@ -17,7 +17,10 @@ public class DiceButtonController : MonoBehaviour {
 	PchanController Pscript; 
 	GameObject GuideM;
 	guideController GuideC;
-
+	GameObject fadeScript;
+	FadeScript FadeSC;
+	GameObject ArrowB;
+	private float timeleft;
 
 	//☆################☆################  Start  ################☆################☆
 
@@ -33,6 +36,9 @@ public class DiceButtonController : MonoBehaviour {
 		this.DiceB = GameObject.Find ("DiceRollButton");
 		GuideM = GameObject.Find ("guideMaster");
 		GuideC = GuideM.GetComponent<guideController> ();
+		fadeScript = GameObject.Find ("blackpanel");
+		FadeSC = fadeScript.GetComponent<FadeScript> ();
+		ArrowB = GameObject.Find ("arrowButtons");
 	}
 
 	//####################################  Update  ###################################
@@ -46,8 +52,16 @@ public class DiceButtonController : MonoBehaviour {
 
 		// 進めるマスが0 && サイコロふる準備ができたら、サイコロボタンを有効（再表示）にする
 		if (canRoll == true) {
+//			Debug.Log("DiceB.transform.rotation.y！"+DiceB.transform.rotation.y);
+			if((DiceB.transform.rotation.y>0.01)||(DiceB.transform.rotation.y<-0.01)){
+			DiceB.transform.Rotate(new Vector3(0, 30, 0) * Time.deltaTime);
+			}else if ((DiceB.transform.rotation.y <=0.01)||(DiceB.transform.rotation.y>=-0.01)) {
+				DiceB.transform.Rotate(new Vector3(0, 0, 0));
+			}
+
 			DiceB.SetActive (true);
-		} else if(canRoll == false) {
+
+		} else if(canRoll == false){
 			DiceB.SetActive (false);	
 		}
 
@@ -55,11 +69,14 @@ public class DiceButtonController : MonoBehaviour {
 
 	//####################################  other  ####################################
 
-	//サイコロボタンが非アクティブになった時に実行
-//	void OnDisable(){
-//		Debug.Log("★Diceスクリプト_非アクティブになった時の処理_出席確認");
-//		GuideC.initializePosition ();
-//	}
+	IEnumerator WaitAndDiceSet(){
+		yield return new WaitForSeconds (1.8f);
+		DiceB.SetActive (true);
+	}
+
+	void DiceSet(){
+		DiceB.SetActive (true);
+	}
 
 	//サイコロをふる処理
 	public void DiceRoll() {
@@ -78,7 +95,8 @@ public class DiceButtonController : MonoBehaviour {
 			}
 			Debug.Log("サイコロ投げた！");
 			Debug.Log("サイコロが止まった！ あと"+DiceResult+"マス動けます");
-
+			DiceB.transform.Translate (0,0,10);
+			DiceB.transform.Rotate(new Vector3(0, 270, 0));
 			GuideC.ToUnderGround ();	
 			GuideC.initializePosition ();
 

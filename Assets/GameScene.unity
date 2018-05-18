@@ -2923,8 +2923,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 578a1efaa846942478841239fbb7909a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  "\u753B\u50CF1": {fileID: 0}
-  "\u753B\u50CF2": {fileID: 0}
+  uchan50: {fileID: 21300000, guid: 5ec6b1d4dcc7b5e4bba020eff737bca5, type: 3}
+  pchan50: {fileID: 21300000, guid: 272098831670a264590522f63691d15e, type: 3}
 --- !u!4 &73932272
 Transform:
   m_ObjectHideFlags: 0
@@ -6876,13 +6876,13 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 193049256}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7933534, z: -0, w: -0.60876137}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.07, y: 2.06, z: 2.05}
   m_Children: []
   m_Father: {fileID: 1743031554}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 255, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -218, y: -523}
@@ -11103,6 +11103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1299536e073fd2342b3840bbfd3275eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alfa: 0
   goFadeIn: 0
   goFadeOut: 0
 --- !u!114 &303881226
@@ -22369,6 +22370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 704749203}
   - component: {fileID: 704749202}
+  - component: {fileID: 704749204}
   m_Layer: 0
   m_Name: charamovemanager
   m_TagString: Untagged
@@ -22391,6 +22393,7 @@ MonoBehaviour:
   Player_pos: {x: 0, y: 0, z: 0}
   NextPos: {x: 0, y: 0, z: 0}
   rbInfo: {fileID: 0}
+  myAnimator: {fileID: 0}
   rectTran: {fileID: 0}
   DiceC: {fileID: 0}
   ArrowC: {fileID: 0}
@@ -22411,6 +22414,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &704749204
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 704749201}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7fa362ca54b51bd4ca158e712df525f2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &705785420
 Prefab:
   m_ObjectHideFlags: 0
@@ -37779,6 +37799,7 @@ GameObject:
   - component: {fileID: 1229254469}
   - component: {fileID: 1229254468}
   - component: {fileID: 1229254467}
+  - component: {fileID: 1229254470}
   m_Layer: 0
   m_Name: Cube_N
   m_TagString: obstacle
@@ -37840,7 +37861,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1229254465}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -37852,6 +37873,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1229254465}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &1229254470
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1229254465}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!4 &1229506580 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4014698561187972, guid: ea10774542693594183ed8bc58125543,
@@ -38047,6 +38083,7 @@ GameObject:
   - component: {fileID: 1237293804}
   - component: {fileID: 1237293806}
   - component: {fileID: 1237293807}
+  - component: {fileID: 1237293808}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -38244,6 +38281,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &1237293808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1237293803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b2d74f34f5e8614dab4709a39078a53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RemainingSteps: 0
+  Player_pos: {x: 0, y: 0, z: 0}
+  NextPos: {x: 0, y: 0, z: 0}
+  rb: {fileID: 0}
+  PIsRunning: 0
+  rectTran: {fileID: 0}
+  DiceC: {fileID: 0}
+  ArrowC: {fileID: 0}
+  GuideC: {fileID: 0}
+  ArrivedNextPoint: 0
+  UDiceTicket: 1
+  PDiceTicket: 1
 --- !u!1001 &1238596763
 Prefab:
   m_ObjectHideFlags: 0
@@ -39062,15 +39122,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RemainingSteps: 0
   Player_pos: {x: 0, y: 0, z: 0}
-  NextPos: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
   UIsRunning: 0
   rectTran: {fileID: 0}
   DiceC: {fileID: 0}
   ArrowC: {fileID: 0}
-  GuideC: {fileID: 0}
   ArrivedNextPoint: 0
   UDiceTicket: 1
+--- !u!143 &1259577290
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1259577288}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &1259577293 stripped
 Transform:
   m_PrefabParentObject: {fileID: 400096, guid: 412b92d4feeb9c548bfa98f62c4d1022, type: 2}
@@ -39088,7 +39163,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!136 &1259577295
 CapsuleCollider:
@@ -58119,6 +58194,7 @@ GameObject:
   - component: {fileID: 1836846335}
   - component: {fileID: 1836846334}
   - component: {fileID: 1836846337}
+  - component: {fileID: 1836846340}
   m_Layer: 0
   m_Name: pchan
   m_TagString: Player
@@ -58188,13 +58264,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RemainingSteps: 0
   Player_pos: {x: 0, y: 0, z: 0}
-  NextPos: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
+  myAnimator: {fileID: 0}
   PIsRunning: 0
   rectTran: {fileID: 0}
   DiceC: {fileID: 0}
   ArrowC: {fileID: 0}
-  GuideC: {fileID: 0}
   ArrivedNextPoint: 0
   PDiceTicket: 1
 --- !u!54 &1836846338
@@ -58225,6 +58300,23 @@ CapsuleCollider:
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.75, z: 0}
+--- !u!143 &1836846340
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1836846333}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!4 &1837689613 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4439535341756060, guid: 62bf106055dc84816a25edbee246a82e,
