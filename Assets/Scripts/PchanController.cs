@@ -69,7 +69,7 @@ public class PchanController : MonoBehaviour {
 		timeleft -= Time.deltaTime;
 		if (timeleft <= 0.0) {
 			timeleft = 1.0f;
-			Debug.Log("PDiceTicket :"+PDiceTicket);
+//			Debug.Log("PDiceTicket :"+PDiceTicket);
 		}
 
 		if (TurnMscript.canMove2P == true) {
@@ -140,29 +140,19 @@ public class PchanController : MonoBehaviour {
 					uc.Move (transform.forward, Random.Range (1, 4) * 3.0f);
 					Debug.Log("Pちゃんの体当たりだ！");
 				}
-//				if (bc) {
-//					bc.Move (transform.forward, Random.Range (1, 4) * 3.0f);
-//				}
 			}
 		}
 	}
-
-
-	// ------------ 衝突時の処理--------------------------
-	private void OnControllerColliderHit(ControllerColliderHit hit){
-		BallController bc = hit.gameObject.GetComponent<BallController> ();
-		UnityChanController uc = hit.gameObject.GetComponent<UnityChanController> ();
-		if (uc) {
-			uc.Move (transform.forward, Random.Range (1, 4) * 3.0f);
-		}
-		if (bc) {
-			bc.Move (transform.forward, Random.Range (1, 4) * 3.0f);
-		}
-	}
+		
 
 	public void Move(Vector3 direction, float distance){
 		Vector3 moveVector = direction.normalized * distance;
-		transform.DOMove(transform.position + moveVector, 0.5f);
+		Debug.Log("2P direction"+direction);
+		Debug.Log("2P distance"+distance);
+		Debug.Log("2P moveVector"+moveVector);
+//		transform.DOMove(transform.position + moveVector, 0.5f);
+		rb.AddForce(moveVector*1);
+		Debug.Log("2P吹っ飛んだ！");
 	}
 	//---------------------------------------------------
 

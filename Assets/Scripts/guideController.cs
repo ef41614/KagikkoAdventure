@@ -38,7 +38,7 @@ public class guideController : MonoBehaviour {
 	//####################################  other  ####################################
 
 	public void ToUnderGround(){
-		Vector3 underGround = new Vector3 (this.transform.position.x, this.transform.position.y - 50, this.transform.position.y);
+		Vector3 underGround = new Vector3 (this.transform.position.x, this.transform.position.y - 50, this.transform.position.z);
 		transform.DOLocalMove (underGround, 0.1f);
 		Debug.Log("地面の下に行ったよ");
 	}
@@ -51,7 +51,7 @@ public class guideController : MonoBehaviour {
 //			NGP = Pscript.NextPos;
 //		}
 		NGP = CharaMoveMscript.NextPos;
-		Debug.Log("NGP上:"+NGP);
+//		Debug.Log("NGP上:"+NGP);
 		NGP.x = Mathf.RoundToInt ( ((NGP.x)/3)*3);
 		NGP.z = Mathf.RoundToInt ( ((NGP.z)/3)*3);
 //		Debug.Log("NGP下:"+NGP);
@@ -68,7 +68,7 @@ public class guideController : MonoBehaviour {
 			unitychan = GameObject.Find ("unitychan");
 			Uscript = unitychan.GetComponent<UnityChanController>();
 			CharaPos = Uscript.Player_pos;
-			Debug.Log("Uscript.Player_pos :"+Uscript.Player_pos);
+//			Debug.Log("Uscript.Player_pos :"+Uscript.Player_pos);
 //			CharaPos = GameObject.Find ("unitychan").transform;
 //			CharaPos = unitychan.GetComponent<Transform>();
 //			CharaPos = new Vector3 (GameObject.Find ("unitychan").transform);

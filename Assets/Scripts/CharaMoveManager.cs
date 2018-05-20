@@ -35,7 +35,8 @@ public class CharaMoveManager : MonoBehaviour {
 
 	private GameObject DiceB; 
 	public DiceButtonController DiceC;
-	private GameObject ArrowB;
+	private GameObject Arrowbox;
+	GameObject ArrowBtns;
 	public arrowButtonsController ArrowC;
 	private GameObject GuideM;
 	public guideController GuideC;
@@ -60,6 +61,16 @@ public class CharaMoveManager : MonoBehaviour {
 	GameObject activeChara;
 	GameObject activeCharaScript;
 
+	GameObject wall_Left;
+	GameObject wall_Right;
+	GameObject wall_Bottom;
+	GameObject wall_Top;
+
+	Vector3 LeftPos;
+	Vector3 RightPos;
+	Vector3 BottomPos;
+	Vector3 TopPos;
+
 
 	//☆################☆################  Start  ################☆################☆
 	void Start () {
@@ -73,8 +84,9 @@ public class CharaMoveManager : MonoBehaviour {
 
 		DiceB = GameObject.Find ("DiceBox");
 		DiceC = DiceB.GetComponent<DiceButtonController>(); 
-		ArrowB = GameObject.Find ("ArrowsBox");
-		ArrowC = ArrowB.GetComponent<arrowButtonsController>();
+		Arrowbox = GameObject.Find ("ArrowsBox");
+		ArrowBtns = GameObject.Find ("arrowButtons");
+		ArrowC = Arrowbox.GetComponent<arrowButtonsController>();
 		GuideM = GameObject.Find ("guideMaster");
 		GuideC = GuideM.GetComponent<guideController> ();
 
@@ -89,11 +101,35 @@ public class CharaMoveManager : MonoBehaviour {
 
 		ArrivedNextPoint = true;
 
+		wall_Left = GameObject.Find ("Cube_W");
+		wall_Right = GameObject.Find ("Cube_E");
+		wall_Bottom = GameObject.Find ("Cube_S");
+		wall_Top = GameObject.Find ("Cube_N");
+
+		LeftPos = wall_Left.transform.position;
+		LeftPos.x += 3; 
+		RightPos = wall_Right.transform.position;
+		RightPos.x -= 3;
+		BottomPos = wall_Bottom.transform.position;
+		BottomPos.z += 3;
+		TopPos = wall_Top.transform.position;
+		TopPos.z -= 3.5f;
 	}
 
 	//####################################  Update  ###################################
 
 	void Update () {
+			unitychan.transform.position = (new Vector3 (
+			Mathf.Clamp (unitychan.transform.position.x, LeftPos.x, RightPos.x),
+			Mathf.Clamp (unitychan.transform.position.y, -1, 3),
+			Mathf.Clamp (unitychan.transform.position.z, BottomPos.z, TopPos.z)
+		));
+			
+			pchan.transform.position = (new Vector3 (
+			Mathf.Clamp (pchan.transform.position.x, LeftPos.x, RightPos.x),
+			Mathf.Clamp (pchan.transform.position.y, -1, 3),
+			Mathf.Clamp (pchan.transform.position.z, BottomPos.z, TopPos.z) 
+		));
 
 		if (TurnMscript.canMove1P == true) {
 			canMoveInfo = TurnMscript.canMove1P;
@@ -126,7 +162,36 @@ public class CharaMoveManager : MonoBehaviour {
 		}
 
 
+
 		if (canMoveInfo == true) {
+
+			//---動けなくなった時の救済措置---
+			if(ArrowC.canMove == true){
+				GameObject[] directions = GameObject.FindGameObjectsWithTag("guideChild");
+				if (directions != null) {
+				}else{
+					if (Player_pos.x >= 0) {
+						Vector3 toLeft = new Vector3 (this.transform.position.x-3, this.transform.position.y, this.transform.position.z);
+						transform.DOLocalMove (toLeft, 0.1f);
+						Debug.Log("救済：左に行ったよ");
+					} else if (Player_pos.x < 0) {
+						Vector3 toLeft = new Vector3 (this.transform.position.x-3, this.transform.position.y, this.transform.position.z);
+						transform.DOLocalMove (toLeft, 0.1f);
+						Debug.Log("救済：右に行ったよ");
+					}
+					if (Player_pos.z >= 0) {
+						Vector3 toLeft = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z-3);
+						transform.DOLocalMove (toLeft, 0.1f);
+						Debug.Log("救済：後ろに行ったよ");
+					} else if (Player_pos.z < 0) {
+						Vector3 toLeft = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z+3);
+						transform.DOLocalMove (toLeft, 0.1f);
+						Debug.Log("救済：前に行ったよ");
+					}
+				}
+			}
+			//-----------------------------------
+
 //			Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し前5");
 			if (ArrivedNextPoint == true) {
 				// 走行中状態がOFF（＝停止状態）の時
@@ -147,7 +212,7 @@ public class CharaMoveManager : MonoBehaviour {
 //						Invoke ("TurnMscript.ChangePlayer", 1.0f);
 //					TurnMscript.ChangePlayer ();
 						StartCoroutine("WaitAndTurnChange");
-							Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し後");
+//							Debug.Log ("CharaMoveManagerからターン切り替えスクリプト呼び出し後");
 //						}
 					}
 				}
@@ -209,6 +274,9 @@ public class CharaMoveManager : MonoBehaviour {
 		} else {
 			canGoB = false;
 		}
+
+
+
 	}
 
 //	public int reduceSteps(int stp){

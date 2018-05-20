@@ -9,6 +9,7 @@ TagManager:
   - obstacle
   - guideM
   - Treasure
+  - guideChild
   layers:
   - Default
   - TransparentFX

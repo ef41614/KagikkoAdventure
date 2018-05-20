@@ -67,12 +67,31 @@ public class UnityChanController : MonoBehaviour {
 	//####################################  Update  ###################################
 
 	void Update () {
+
+		RaycastHit hit;
+
+		// If Ray hit something
+		if (Physics.SphereCast (transform.position, 1, transform.forward, out hit, 30)) {
+			// Rayの可視化
+//			Debug.DrawRay(transform.position, hit.point, Color.yellow);
+
+			if (hit.collider.tag == "Player") {
+//				Debug.DrawLine (transform.position, hit.point, Color.blue);
+//			} else if (hit.collider.tag == "guideM") {
+//			} else if (hit.collider.tag == "guideChild") {
+			} else if (hit.collider.tag == "obstacle") {
+				// Draw Red Line
+//				Debug.DrawLine (transform.position, hit.point, Color.red);
+			} else{
+			}
+		}
+
 		timeleft -= Time.deltaTime;
 		if (timeleft <= 0.0) {
 			timeleft = 1.0f;
 
-			Debug.Log("UDiceTicket :"+UDiceTicket);
-			Debug.Log("Player_pos :"+Player_pos);
+//			Debug.Log("UDiceTicket :"+UDiceTicket);
+//			Debug.Log("Player_pos :"+Player_pos);
 		}
 
 
@@ -134,6 +153,37 @@ public class UnityChanController : MonoBehaviour {
 			}
 		}
 	}
+		
+
+	public void OnCollisionStay	(Collision other){
+		if (TurnMscript.canMove1P == true) {
+			if (other.gameObject.tag == "obstacle") {
+			//---動けなくなった時の救済措置---
+			GameObject[] directions = GameObject.FindGameObjectsWithTag("guideChild");
+			if (directions == null) {
+				if (Player_pos.x >= 0) {
+						Vector3 toLeft = new Vector3 (this.transform.position.x-3, this.transform.position.y, this.transform.position.z);
+						transform.DOLocalMove (toLeft, 0.1f);
+						Debug.Log("救済：U左に行ったよ");
+				} else if (Player_pos.x < 0) {
+						Vector3 toLeft = new Vector3 (this.transform.position.x-3, this.transform.position.y, this.transform.position.z);
+						transform.DOLocalMove (toLeft, 0.1f);
+						Debug.Log("救済：U右に行ったよ");
+				}
+				if (Player_pos.z >= 0) {
+						Vector3 toLeft = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z-3);
+						transform.DOLocalMove (toLeft, 0.1f);
+						Debug.Log("救済：U後ろに行ったよ");
+				} else if (Player_pos.z < 0) {
+						Vector3 toLeft = new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z+3);
+						transform.DOLocalMove (toLeft, 0.1f);
+						Debug.Log("救済：U前に行ったよ");
+				}
+			}
+			//-----------------------------------
+			}
+		}
+	}
 
 	public void OnCollisionEnter(Collision other){
 		if (TurnMscript.canMove1P == true) {
@@ -144,33 +194,27 @@ public class UnityChanController : MonoBehaviour {
 					pc.Move (transform.forward, Random.Range (1, 4) * 3.0f);
 					Debug.Log ("Uちゃんの体当たりだ！");
 				}
-//				if (bc) {
-//					bc.Move (transform.forward, Random.Range (1, 4) * 3.0f);
-//				}
 			}
+
+
 		} else if (TurnMscript.canMove1P == false) {
 			if (other.gameObject.tag == "obstacle") {
+				Debug.Log ("体当たりで障害物にぶつかったよ");
 				rb.constraints = RigidbodyConstraints.FreezePosition;
+				rb.constraints = RigidbodyConstraints.FreezeRotation;
+
 			}
 		}
 	}
 
-	// ------------ 衝突時の処理--------------------------
-	private void OnControllerColliderHit(ControllerColliderHit hit){
-		BallController bc = hit.gameObject.GetComponent<BallController> ();
-		PchanController pc = hit.gameObject.GetComponent<PchanController> ();
-		if (pc) {
-			pc.Move (transform.forward, Random.Range (1, 4) * 3.0f);
-			Debug.Log("Uちゃんの体当たりだ！");
-		}
-//		if (bc) {
-//			bc.Move (transform.forward, Random.Range (1, 4) * 3.0f);
-//		}
-	}
 
 	public void Move(Vector3 direction, float distance){
 		Vector3 moveVector = direction.normalized * distance;
-		transform.DOMove(transform.position + moveVector, 1.5f);
+		Debug.Log("1P direction"+direction);
+		Debug.Log("1P distance"+distance);
+		Debug.Log("1P moveVector"+moveVector);
+//		transform.DOMove(transform.position + moveVector, 0.5f);
+		rb.AddForce(moveVector*1);
 		Debug.Log("1P吹っ飛んだ！");
 	}
 	//---------------------------------------------------
