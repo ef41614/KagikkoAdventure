@@ -214,7 +214,7 @@ public class UnityChanController : MonoBehaviour {
 		Debug.Log("1P distance"+distance);
 		Debug.Log("1P moveVector"+moveVector);
 //		transform.DOMove(transform.position + moveVector, 0.5f);
-		rb.AddForce(moveVector*1);
+		rb.AddForce(moveVector*100);
 		Debug.Log("1P吹っ飛んだ！");
 	}
 	//---------------------------------------------------
