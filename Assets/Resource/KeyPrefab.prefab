@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114161214360633598}
   m_Layer: 0
   m_Name: KeyPrefab
-  m_TagString: Untagged
+  m_TagString: Key
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60d372e01c67b454a97f5989c5803d38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyRnd: 1
   GMScript: {fileID: 0}
+  parentObject: {fileID: 0}
 --- !u!135 &135951669564290194
 SphereCollider:
   m_ObjectHideFlags: 1

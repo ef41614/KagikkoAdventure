@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -14,11 +15,17 @@ public class GameManager : MonoBehaviour {
 	private int rndNum = 0;
 	private int lastTimeNum = 0;
 
+	GameObject Mewindow;
+	public Text targetText; 
+
 	//☆################☆################  Start  ################☆################☆
 
 	void Start () {
 		audioSource = this.gameObject.GetComponent<AudioSource> ();
 		CreateKey ();
+
+		Mewindow = GameObject.Find ("MeWindow");
+		Mewindow.gameObject.SetActive (false);
 
 	}
 
@@ -30,6 +37,19 @@ public class GameManager : MonoBehaviour {
 	}
 
 	//####################################  other  ####################################
+
+	public void ActiveMewindow(){
+		Mewindow.gameObject.SetActive(true);
+	}
+
+	public void InactiveMewindow(){
+		Mewindow.gameObject.SetActive(false);
+	}
+
+	public void DisplayMessage(string sentence){
+		this.targetText = Mewindow.GetComponentInChildren<Text>();
+		this.targetText.text = sentence; 
+	}
 
 	public void CreateKey(){
 		GameObject key = (GameObject)Instantiate (KeyPrefab);	

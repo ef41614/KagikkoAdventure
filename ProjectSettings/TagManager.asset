@@ -10,6 +10,7 @@ TagManager:
   - guideM
   - Treasure
   - guideChild
+  - Key
   layers:
   - Default
   - TransparentFX

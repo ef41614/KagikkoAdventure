@@ -151,7 +151,7 @@ public class PchanController : MonoBehaviour {
 		Debug.Log("2P distance"+distance);
 		Debug.Log("2P moveVector"+moveVector);
 //		transform.DOMove(transform.position + moveVector, 0.5f);
-		rb.AddForce(moveVector*100);
+		rb.AddForce(moveVector*200);
 		Debug.Log("2P吹っ飛んだ！");
 	}
 	//---------------------------------------------------
